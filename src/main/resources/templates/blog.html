@@ -16,13 +16,13 @@
 <nav th:replace="_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
-            <h2 class="ui teal header item">weiss</h2>
+            <h2 class="ui teal header item">littlecow</h2>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>&nbsp;&nbsp;首页&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>&nbsp;&nbsp;分类&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>&nbsp;&nbsp;标签&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini clone icon"></i>&nbsp;&nbsp;归档&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini info icon"></i>&nbsp;&nbsp;关于我&nbsp;&nbsp;</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini user outline icon"></i>&nbsp;&nbsp;登录后台&nbsp;&nbsp;</a>
+            <a target="_blank" href="#" class="m-item item m-mobile-hide"><i class="mini user outline icon"></i>&nbsp;&nbsp;登录后台&nbsp;&nbsp;</a>
             <div class="m-item right item m-mobile-hide">
                 <div class="ui icon inverted transparent input">
                     <input type="text" placeholder="Search..."/>
@@ -43,8 +43,8 @@
             <div class="ui horizontal link list">
                 <div class="item">
                     <!-- 头像地址：  th:src="@{${blog.user.avatar}}" -->
-                    <img src="../static/images/冠希.jpg" th:src="@{/images/冠希.jpg}" style="width: 25px; height:25px" alt="" class="ui avatar image">
-                    <div class="content"><a class="header" th:text="${blog.user.nickname}">李海仪</a></div>
+                    <img src="../static/images/avatar.jpg" th:src="@{/images/avatar.jpg}" style="width: 25px; height:25px" alt="" class="ui avatar image">
+                    <div class="content"><a class="header" th:text="${blog.user.nickname}">刘健</a></div>
                 </div>
                 <div class="item">
                     <i class="calendar icon"></i>
@@ -58,7 +58,7 @@
         </div>
         <div class="ui attached segment">
             <!-- image   尺寸width : 910px-->
-            <img src="https://cdn.mom1.cn/?mom=302" th:src="@{${blog.firstPic}}" style="width:910px;height: 400px;" alt="" class="ui fluid rounded image">
+            <img src="https://cdn.mom1.cn/?mom=302" th:src="@{${blog.firstPicture}}" style="width:910px;height: 400px;" alt="" class="ui fluid rounded image">
         </div>
         <div class="ui attached padded segment">
             <!-- content -->
@@ -471,7 +471,7 @@ h5,h6{font-size:1em;}
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ul class="list">
-                        <li>作者：<span th:text="${blog.user.nickname}">weiss</span><a href="" th:href="@{/about}" target="_blank">(联系作者)</a></li>
+                        <li>作者：<span th:text="${blog.user.nickname}">littlecow</span><a href="" th:href="@{/about}" target="_blank">(联系作者)</a></li>
                         <li>发表时间：<span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm')}">2017-10-02 09:08</span></li>
                         <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
                         <li>公众号转载：请在文末添加作者公众号二维码</li>
@@ -491,7 +491,7 @@ h5,h6{font-size:1em;}
                         <h3 class="ui dividing header">评论</h3>
                         <div class="comment" th:each="comment : ${comments}">
                             <a class="avatar">
-                                <img src="../static/images/冠希.jpg" th:src="@{${comment.avatar}}">
+                                <img src="../static/images/avatar.jpg" th:src="@{${comment.avatar}}">
                             </a>
                             <div class="content">
                                 <a class="author">
@@ -531,7 +531,7 @@ h5,h6{font-size:1em;}
                             <div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
                                 <div class="comment" th:each="reply : ${comment.replyComments}">
                                     <a class="avatar">
-                                        <img src="../static/images/冠希.jpg" th:src="@{${reply.avatar}}">
+                                        <img src="../static/images/avatar.jpg" th:src="@{${reply.avatar}}">
                                     </a>
                                     <div class="content">
                                         <a class="author" >
@@ -679,8 +679,8 @@ h5,h6{font-size:1em;}
             <div class="three wide column">
                 <h4 class="ui inverted header m-opacity-mini">联系我</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item m-text-thin">Email: lihaiyi_weiss@163.com</a>
-                    <a href="#" class="item m-text-thin">QQ: 1318714789</a>
+                    <a href="#" class="item m-text-thin">Email: whu_jianliu@163.com</a>
+                    <a href="#" class="item m-text-thin">QQ: 2431148967</a>
                 </div>
             </div>
             <div class="seven wide column">
@@ -691,7 +691,7 @@ h5,h6{font-size:1em;}
             </div>
         </div>
         <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2019 weiss Designed by weiss</p>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2022 Designed by liujian</p>
     </div>
 </footer>
 

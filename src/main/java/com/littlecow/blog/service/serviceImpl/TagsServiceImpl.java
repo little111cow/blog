@@ -23,7 +23,7 @@ public class TagsServiceImpl implements TagsService {
     @Override
     public List<Tag> getTagByIds(String idsStr) {
         List<Tag> list = null;
-        if(!idsStr.equals("") && idsStr != null) {
+        if( idsStr != null&&!idsStr.equals("")) {
             String[] ids = idsStr.trim().split(",");
             list  = new ArrayList<>();
             for (String id : ids) {

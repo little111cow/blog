@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -54,5 +56,20 @@ public class Blog implements Serializable {
 
     @Resource
     private  User user;
+
+    //判断该博客是否包含某个Tag
+    public boolean containsTagId(Long tagid){
+        if(tagIds == null || "".equals(tagIds)){
+            return false;
+        }
+         Set<Long> tagIdList = new HashSet<>();
+        if(!tagIds.equals("")) {
+            String[] ids = tagIds.trim().split(",");
+            for (String id : ids) {
+                tagIdList.add(Long.parseLong(id));
+            }
+        }
+        return tagIdList.contains(tagid);
+    }
 
 }
