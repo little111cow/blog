@@ -177,7 +177,7 @@ public class BlogsController {
         List<Type> types = typesService.getTypeList();
         model.addAttribute("types",types);
         model.addAttribute(Contants.MESSAGE,"查询成功！");
-        return "web/blogs::blogList";  //实现局部刷新，只刷新表单部分
+        return "admin/blogs::blogList";  //实现局部刷新，只刷新表单部分
     }
 
 

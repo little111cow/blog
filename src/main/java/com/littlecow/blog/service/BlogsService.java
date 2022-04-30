@@ -19,5 +19,6 @@ public interface BlogsService {
 
     List<Blog> getBlogsByTypeId(Long type_id);
 
+    /*推荐的博客列表*/
     List<Blog> getBlogsByRecommendFlag(Boolean recommend,Integer nums);
 }

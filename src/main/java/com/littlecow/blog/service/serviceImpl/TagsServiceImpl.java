@@ -20,12 +20,12 @@ public class TagsServiceImpl implements TagsService {
         return tagsMapper.getTagList();
     }
 
+    /*根据blog的tagids获得所有的tag列表*/
     @Override
     public List<Tag> getTagByIds(String idsStr) {
-        List<Tag> list = null;
+        List<Tag> list = new ArrayList<>();
         if( idsStr != null&&!idsStr.equals("")) {
             String[] ids = idsStr.trim().split(",");
-            list  = new ArrayList<>();
             for (String id : ids) {
                 list.add(tagsMapper.getTagById(Long.parseLong(id)));
             }

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -50,6 +51,8 @@ public class Blog implements Serializable {
     private String description;
 
     private String tagIds;
+
+    private List<Tag> tags;
 
     @Resource
     private Type type;

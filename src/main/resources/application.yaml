@@ -8,6 +8,10 @@ spring:
 # thymeleaf����ģ��ģʽ����
   thymeleaf:
     mode: HTML
+#  日期格式配置
+  mvc:
+    format:
+      date: yyyy-mm-dd
 # mybatis����
 mybatis:
     type-aliases-package: com.littlecow.blog.entity
