@@ -75,6 +75,24 @@
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>1.4.2</version>
 		</dependency>
+		<!--将博客内容解析成html的插件及其扩展-->
+		<dependency>
+			<groupId>org.commonmark</groupId>
+			<artifactId>commonmark</artifactId>
+			<version>0.18.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.commonmark</groupId>
+			<artifactId>commonmark-ext-gfm-tables</artifactId>
+			<version>0.18.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.commonmark</groupId>
+			<artifactId>commonmark-ext-heading-anchor</artifactId>
+			<version>0.18.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

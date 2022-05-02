@@ -13,6 +13,8 @@ public interface BlogsService {
 
     Blog getBlogById(Long id);
 
+    Blog getBlogAndConvert(Long id);
+
     boolean updateBlog(Blog blog);
 
     List<Blog> getBlogByCondition(Blog blog);
@@ -21,4 +23,6 @@ public interface BlogsService {
 
     /*推荐的博客列表*/
     List<Blog> getBlogsByRecommendFlag(Boolean recommend,Integer nums);
+
+    Boolean updateViews(Blog blog);
 }

@@ -38,7 +38,7 @@ public class IndexController {
     @Resource
     private UserLoginService userLoginService;
 
-    @RequestMapping("/index")
+    @RequestMapping({"/index","/"})
     @SuppressWarnings("all")
     public String index(@RequestParam(defaultValue = "1") int pagenum, Model model){
         PageHelper.startPage(pagenum, Contants.PAGE_SIZE);  //跟着后边一个select语句会被分页

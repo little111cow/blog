@@ -65,4 +65,7 @@ public interface BlogsMapper {
 
     @Select("select * from t_blog where recommend=#{recommend} order by update_time desc limit #{nums}")
     List<Blog> getBlogsByRecommendFlag(@Param("recommend")Boolean recommend,@Param("nums") Integer nums);
+
+    @Update("update t_blog set views = #{views} where id = #{bid} ")
+    Boolean updateViewsById(@Param("bid")Long id,@Param("views") Integer views);
 }

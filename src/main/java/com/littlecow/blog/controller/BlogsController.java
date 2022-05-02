@@ -86,7 +86,7 @@ public class BlogsController {
         blog.setShareStatement(true);
         blog.setCommentabled(true);
         blog.setAppreciation(true);
-       //给定一个默认初始首图,这样写的时候就可以不用每次单独找图片
+       //给定一个默认初始首图,这样写的时候就可以不用每次单独找图片，首图资源地址需要抓包获取
         blog.setFirstPicture(Contants.DEFAULT_FIRST_PICTURE_URL);
         List<Tag> tags = tagsService.getTagList();
         List<Type> types = typesService.getTypeList();

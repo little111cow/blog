@@ -3,6 +3,8 @@ package com.littlecow.blog.service.serviceImpl;
 import com.littlecow.blog.entity.Blog;
 import com.littlecow.blog.mapper.BlogsMapper;
 import com.littlecow.blog.service.BlogsService;
+import com.littlecow.blog.util.MarkdownUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -58,6 +60,14 @@ public class BlogsServiceImpl implements BlogsService {
 
     @Override
     @Transactional
+    public Boolean updateViews(Blog blog) {
+        Long id = blog.getId();
+        Integer views = blog.getViews()+1;
+        return blogsMapper.updateViewsById(id,views);
+    }
+
+    @Override
+    @Transactional
     public boolean updateBlog(Blog blog) {
         blog.setUpdateTime(new Date());
         blog.setTypeId(blog.getType().getId());  //需要从type中获取到typeid用来更新
@@ -79,6 +89,16 @@ public class BlogsServiceImpl implements BlogsService {
     @Override
     public Blog getBlogById(Long id) {
         return blogsMapper.getBlogById(id);
+    }
+
+    @Override
+    /*通过id获取博客并将博客由markdown转换为html*/
+    public Blog getBlogAndConvert(Long id) {
+        Blog blog = getBlogById(id);
+        Blog blog1 = new Blog();
+        BeanUtils.copyProperties(blog,blog1);
+        blog1.setContent(MarkdownUtils.markdownToHtmlExtensions(blog1.getContent()));  //将markdown转换为html
+        return blog1;
     }
 
     @Override

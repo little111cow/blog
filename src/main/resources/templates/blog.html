@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>博客详情页</title>
     <link rel="stylesheet" type="text/css" href="../static/css/me.css"/>
-    <link rel="stylesheet" type="text/css" href="../static/css/semantic.min.css"/>
-    <link rel="stylesheet" href="../static/css/typo.css">
-    <link rel="stylesheet" href="../static/css/animate.css">
-    <link rel="stylesheet" href="../static/lib/prism/prism.css">
-    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/semantic.min.css" />
+    <link rel="stylesheet" href="../static/css/typo.css"/>
+    <link rel="stylesheet" href="../static/css/animate.css" />
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" />
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" />
 </head>
 <body>
 <!--  导航 -->
@@ -647,7 +647,7 @@ h5,h6{font-size:1em;}
     </div>
 </div>
 <!-- 右下生成目录 -->
-<div class="ui toc-container flowing popup transition hidden" style="width: 250px !important;">
+<div  class="ui toc-container flowing popup transition hidden" style="width: 250px !important;">
     <!-- 生成目录 -->
     <ol class="js-toc"></ol>
 </div>
@@ -696,16 +696,13 @@ h5,h6{font-size:1em;}
 </footer>
 
 <!--/*/<th:block th:replace="_fragments :: script">/*/-->
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
-    <script src="../static/js/semantic.min.js"></script>
-    <script src="../static/lib/prism/prism.js"></script>
-    //代码高亮js引入
-    <script src="../static/lib/qrcode/qrcode.min.js"></script>
-    //生成二维码js引入
-    <script src="../static/lib/tocbot/tocbot.min.js"></script>
-    //生成目录js引入
-    <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
-    //监测滚动轨迹
+<script src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+<script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+<script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+<script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
 <!--/*/</th:block>/*/-->
 
 
@@ -733,10 +730,11 @@ h5,h6{font-size:1em;}
         // Where to grab the headings to build the table of contents.
         contentSelector: '.js-toc-content',
         // Which headings to grab inside of the contentSelector element.
-        headingSelector: 'h1, h2, h3',
+        headingSelector: 'h1, h2, h3, h4, h5'
     });
 
-    $('.toc.button').popup({
+    //要与对应按钮的class对应
+    $('.toc-btn').popup({
         popup : $('.toc-container.popup'),
         on : 'click',
         position: 'left center'
@@ -747,7 +745,7 @@ h5,h6{font-size:1em;}
         position: 'left center'
     });
 
-    var serurl = /*[[#{blog.serurl}]]*/"127.0.0.1:91";
+    var serurl = /*[[#{blog.serurl}]]*/"127.0.0.1:8080";
     var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
     var qrcode = new QRCode("qrcode", {
         text: serurl+url,
@@ -791,7 +789,7 @@ h5,h6{font-size:1em;}
                 identifier: 'nickname',
                 rules: [{
                     type: 'empty',
-                    prompt: '请输入你的大名'
+                    prompt: '请输入你的名字'
                 }]
             },
             type: {
