@@ -105,16 +105,15 @@
         <div class="ui bottom attached segment">
             <div class="ui mini pagination menu">
                 <!--此处还存在问题，条件查询时不能翻页，无法共用请求-->
-                <div class="item"><a th:href="@{'/types/'+${activeTypeId}">首页</a></div>
-                <div class="item"><a th:href="@{'/types/'+${activeTypeId}(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
-                <div class="item"><a th:href="@{'/types/'+${activeTypeId}(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
-                <div class="item"><a th:href="@{'/types/'+${activeTypeId}(pagenum=${pageInfo.pages})}">尾页</a></div>
+                <div class="item"><a href="#" th:href="@{'/types/'+${activeTypeId}}">首页</a></div>
+                <div class="item"><a href="#" th:href="@{'/types/'+${activeTypeId}(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
+                <div class="item"><a href="#" th:href="@{'/types/'+${activeTypeId}(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
+                <div class="item"><a href="#" th:href="@{'/types/'+${activeTypeId}(pagenum=${pageInfo.pages})}">尾页</a></div>
             </div>
         </div>
         <div class="ui mini segment m-inline-block">
             <p class="text m-font-color">当前第<span class="m-teal" th:text="${pageInfo.pageNum}"></span>页，总<span class="m-teal" th:text="${pageInfo.pages}"></span>页，共<span class="m-teal" th:text="${pageInfo.total}"></span>条记录</p>
         </div>
-
     </div>
 </div>
 

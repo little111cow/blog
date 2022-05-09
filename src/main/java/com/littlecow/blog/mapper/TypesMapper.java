@@ -13,6 +13,9 @@ public interface TypesMapper {
     @Select("select * from t_type")
     List<Type> getTypeList();
 
+    @Select("select * from t_type limit #{num}")
+    List<Type> getTypeListLimit(@Param("num") Integer num);
+
     @Select("select * from t_type where name=#{typename}")
     Type getTypeByName(@Param("typename")String typename);
 

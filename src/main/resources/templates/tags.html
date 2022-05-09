@@ -84,7 +84,7 @@
 
                                 <div class="row">
                                     <div class="column">
-                                        <a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui basic left pointing label m-padded-mini m-text-thin" th:classappend="${tag.id==activeTagId} ? 'red'" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</a>
+                                        <a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui basic teal left pointing label m-padded-mini m-text-thin" th:classappend="${tag.id==activeTagId} ? 'red'" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</a>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
         <div class="ui bottom attached segment">
             <div class="ui mini pagination menu">
                 <!--此处还存在问题，条件查询时不能翻页，无法共用请求-->
-                <div class="item"><a th:href="@{'/tags/'+${activeTagId}">首页</a></div>
+                <div class="item"><a th:href="@{'/tags/'+${activeTagId}}">首页</a></div>
                 <div class="item"><a th:href="@{'/tags/'+${activeTagId}(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
                 <div class="item"><a th:href="@{'/tags/'+${activeTagId}(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
                 <div class="item"><a th:href="@{'/tags/'+${activeTagId}(pagenum=${pageInfo.pages})}">尾页</a></div>

@@ -8,6 +8,8 @@ public interface TypesService {
 
     List<Type> getTypeList();
 
+    List<Type> getTypeListLimit(Integer num);
+
     boolean addType(Type type);
 
     Type getTypeByName(String typename);

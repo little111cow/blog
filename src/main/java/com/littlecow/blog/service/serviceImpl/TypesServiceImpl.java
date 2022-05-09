@@ -47,4 +47,9 @@ public class TypesServiceImpl implements TypesService {
         return typesMapper.getTypeList();
     }
 
+    @Override
+    public List<Type> getTypeListLimit(Integer num) {
+        return typesMapper.getTypeListLimit(num);
+    }
+
 }

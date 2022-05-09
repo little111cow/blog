@@ -12,6 +12,9 @@ public interface TagsMapper {
     @Select("select * from t_tag")
     List<Tag> getTagList();
 
+    @Select("select * from t_tag limit #{num}")
+    List<Tag> getTagListLimit(@Param("num")Integer num);
+
     @Select("select * from t_tag where name = #{tagname}")
     Tag getTagByName(@Param("tagname") String name);
 

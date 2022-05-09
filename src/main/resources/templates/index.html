@@ -21,9 +21,10 @@
             <a target="_blank" href="#" class="m-item item m-mobile-hide"><i class="mini user outline icon"></i>&nbsp;&nbsp;登录后台&nbsp;&nbsp;</a>
             <div class="m-item right item m-mobile-hide">
                 <div class="ui icon inverted transparent input">
-                    <input type="text" placeholder="Search..."/>
+                    <input id ="searchBtn" type="text" placeholder="Search..."/>
                     <i class="search link icon"></i>
                 </div>
+                <button id="clear-btn1" class="m-item right item m-mobile-hide ui compact button">clear</button>
             </div>
         </div>
     </div>
@@ -79,7 +80,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="right aligned five wide column"><a href="#" target="_blank"
+                                    <div class="right aligned five wide column"><a href="#" th:href="@{'/types/'+${blog.type.id}}"
                                                                                    class="ui basic teal label m-padded-tiny m-text-thin" th:text="${blog.type.name}">认知升级</a>
                                     </div>
                                 </div>
@@ -100,10 +101,10 @@
                 <div class="ui bottom attached segment">
                     <div class="ui mini pagination menu">
                         <!--此处还存在问题，条件查询时不能翻页，无法共用请求-->
-                        <div class="item"><a th:href="@{/index/blogs}">首页</a></div>
-                        <div class="item"><a th:href="@{/index/blogs(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
-                        <div class="item"><a th:href="@{/index/blogs(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
-                        <div class="item"><a th:href="@{/index/blogs(pagenum=${pageInfo.pages})}">尾页</a></div>
+                        <div class="item"><a th:href="@{/index}">首页</a></div>
+                        <div class="item"><a th:href="@{/index(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
+                        <div class="item"><a th:href="@{/index(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
+                        <div class="item"><a th:href="@{/index(pagenum=${pageInfo.pages})}">尾页</a></div>
                     </div>
                 </div>
                 <div class="ui mini segment m-inline-block">
@@ -271,12 +272,18 @@
 <!--/*/</th:block>/*/-->
 
 <script>
+
     $(function () {
         $(".menu.toggle").click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
         })
-    })
-</script>
+    });
 
+    //清除输入框的内容
+    $("#clear-btn1")
+        .on('click', function(){
+            document.getElementById('searchBtn').value ="";
+        });
+</script>
 </body>
 </html>

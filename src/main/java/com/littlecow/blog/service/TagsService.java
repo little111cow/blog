@@ -8,6 +8,8 @@ import java.util.List;
 public interface TagsService {
     List<Tag> getTagList();
 
+    List<Tag> getTagListLimit(Integer num);
+
     Tag getTagByName(String name);
 
     @Transactional

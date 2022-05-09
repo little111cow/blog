@@ -20,6 +20,11 @@ public class TagsServiceImpl implements TagsService {
         return tagsMapper.getTagList();
     }
 
+    @Override
+    public List<Tag> getTagListLimit(Integer num) {
+        return tagsMapper.getTagListLimit(num);
+    }
+
     /*根据blog的tagids获得所有的tag列表*/
     @Override
     public List<Tag> getTagByIds(String idsStr) {
