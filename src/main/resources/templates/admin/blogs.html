@@ -115,8 +115,8 @@
                 <td class="ui center aligned" th:text="${blog.type.name}">认知升级</td>
                 <td class="ui center aligned" th:text="${blog.recommend} ? '是' : '否'">是</td>
                 <td class="ui center aligned" th:text="${blog.published} ? '发布' : '草稿'">草稿</td>
-                <td class="ui center aligned" th:text="${blog.updateTime}">2019-09-20 00:45</td>
-                <td class="ui center aligned">
+                <td class="ui center aligned" th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm:ss')}">2019-09-20 00:45</td>
+                <td class="ui center aligned inline">
                     <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">编辑</a>
                     <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red basic button">删除</a>
                     <a href="#" th:href="@{/admin/blogs/{id}/view(id=${blog.id})}" class="ui mini blue basic button">预览</a>

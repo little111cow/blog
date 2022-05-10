@@ -53,7 +53,7 @@
 						<span>
 							<i class="circle teal mini icon"></i>
                             <span th:text="${blog.title}">关于可以复习的清单</span>
-							<div class="ui teal basic left pointing label m-padded-mini" th:text="${#dates.format(blog.updateTime, 'mm-dd')}">9月03</div>
+							<div class="ui teal basic left pointing label m-padded-mini" th:text="|${#dates.month(blog.updateTime)}月${#dates.day(blog.updateTime)}日|">9月03</div>
 						</span>
                     <div class="ui orange basic bottom pointing label m-padded-mini" th:text="${blog.flag}">原创</div>
                 </a>

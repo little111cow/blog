@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
     //拦截器拦截的请求和筛除的请求
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/web/**")
-                .excludePathPatterns("/web","/web/login");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/admin/**")
+                .excludePathPatterns("/admin","/admin/login");
     }
 }

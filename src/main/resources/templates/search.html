@@ -80,7 +80,6 @@
                                         <div class="item">
                                             <i class="eye icon"></i>
                                             <span th:text="${blog.views}">521</span>
-
                                         </div>
                                     </div>
                                 </div>
@@ -89,11 +88,9 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="five wide column">
                             <a href="#" target="_blank" th:href="@{/blog/{id}(id = ${blog.id})}">
-                                <img src="../static/images/avatar.jpg" th:src="@{blog.user.firstPicture}" alt="" style="height: 160px"
+                                <img src="../static/images/avatar.jpg" th:src="@{${blog.firstPicture}}" alt="" style="height: 160px"
                                      class="ui rounded image">
                             </a>
                         </div>
