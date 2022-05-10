@@ -5,10 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.littlecow.blog.Contants;
 import com.littlecow.blog.entity.Blog;
 import com.littlecow.blog.entity.Type;
-import com.littlecow.blog.entity.User;
 import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.TypesService;
-import com.littlecow.blog.service.UserLoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +29,9 @@ public class TypesController {
     private TypesService typesService;
 
     @Resource
-    private UserLoginService userLoginService;
+    private CommenControllerUtils controllerUtils;
 
     @RequestMapping("/types/{activeTypeId}")
-    @SuppressWarnings("all")
     public String toTypes(@RequestParam(defaultValue = "1") int pagenum, Model model,
                           @PathVariable Long activeTypeId){
         List<Blog> blogList = new ArrayList<>();
@@ -46,13 +43,7 @@ public class TypesController {
             PageHelper.startPage(pagenum, Contants.PAGE_SIZE);
             blogList = blogsService.getBlogsByTypeId(activeTypeId);
         }
-        for (Blog blog : blogList) {
-            User user = userLoginService.getUserById(blog.getUserId());
-            Type t = typesService.getTypeById(blog.getTypeId());
-            blog.setUser(user);
-            blog.setType(t);
-        }
-        PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
+        PageInfo<Blog> pageInfo = new PageInfo<>(controllerUtils.setBlogTypeTagUser(blogList));
 
         List<Type> types = typesService.getTypeList();
         for (Type type : types) {

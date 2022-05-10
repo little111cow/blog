@@ -25,4 +25,6 @@ public interface BlogsService {
     List<Blog> getBlogsByRecommendFlag(Boolean recommend,Integer nums);
 
     Boolean updateViews(Blog blog);
+
+    List<Blog> searchGlobal(String query);
 }

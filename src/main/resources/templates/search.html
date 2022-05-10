@@ -13,7 +13,7 @@
 <nav th:replace="_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
-            <h2 class="ui teal header item">weiss</h2>
+            <h2 class="ui teal header item">littlecow</h2>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>&nbsp;&nbsp;首页&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>&nbsp;&nbsp;分类&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>&nbsp;&nbsp;标签&nbsp;&nbsp;</a>
@@ -43,14 +43,14 @@
                     <div class="ui teal header">搜索结果</div>
                 </div>
                 <div class="right aligned column">
-                    共 <h3 class="ui orange header m-inline-block m-text-thin" th:text="${page.totalElements}">14</h3> 篇
+                    共 <h3 class="ui orange header m-inline-block m-text-thin" th:text="${pageInfo.total}">14</h3> 篇
                 </div>
             </div>
         </div>
 
 
         <div class="ui teal top attached segment">
-                <div class="ui vertical padded segment m-padded-tb-big" th:if="${page.totalElements == 0}">
+                <div class="ui vertical padded segment m-padded-tb-big" th:if="${pageInfo.total == 0}">
                         <div class="ui info message m-padded-tb-huge">
                             <div class="ui container">
                                 <p>没有查询到相关数据, 请检查关键词重新输入~~~~</p>
@@ -58,7 +58,7 @@
                         </div>
                 </div>
 
-                <div class="ui vertical padded segment m-padded-tb-big" th:each="blog : ${page.content}">
+                <div class="ui vertical padded segment m-padded-tb-big" th:each="blog : ${pageInfo.list}">
                     <div class="ui middle aligned mobile reversed stackable grid">
                         <div class="eleven wide column">
                             <h3 class="ui header"><a href="#" class="m-black" target="_blank" th:text="${blog.title}" th:href="@{/blog/{id}(id = ${blog.id})}">你真的理解什么是财富自由吗?</a></h3>
@@ -69,9 +69,9 @@
                                 <div class="eleven wide column">
                                     <div class="ui mini horizontal link list">
                                         <div class="item">
-                                            <img src="../static/images/冠希.jpg" th:src="@{blog.user.avatar}" style="width: 25px; height:25px" alt=""
+                                            <img src="../static/images/avatar.jpg" th:src="@{/images/avatar.jpg}" style="width: 25px; height:25px" alt=""
                                                  class="ui avatar image">
-                                            <div class="content"><a class="header" th:text="${blog.user.nickname}">李海仪</a></div>
+                                            <div class="content"><a class="header" th:text="${blog.user.nickname}">刘健</a></div>
                                         </div>
                                         <div class="item">
                                             <i class="calendar icon"></i>
@@ -84,7 +84,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="right aligned five wide column"><a href="#" target="_blank"
+                                <div class="right aligned five wide column"><a href="#" th:href="@{'/types/'+${blog.type.id}}" target="_blank"
                                                                                class="ui basic teal label m-padded-tiny m-text-thin" th:text="${blog.type.name}">认知升级</a>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
 
                         <div class="five wide column">
                             <a href="#" target="_blank" th:href="@{/blog/{id}(id = ${blog.id})}">
-                                <img src="../static/images/冠希.jpg" th:src="@{blog.user.firstPic}" alt="" style="height: 160px"
+                                <img src="../static/images/avatar.jpg" th:src="@{blog.user.firstPicture}" alt="" style="height: 160px"
                                      class="ui rounded image">
                             </a>
                         </div>
@@ -102,16 +102,18 @@
             </div>
         </div>
         <!-- 分页 -->
-        <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
-            <div class="ui middle aligned two column grid">
-                <div class="column">
-                    <a href="#" th:href="@{/(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
-                </div>
-                <div class="right aligned column">
-                    <a href="#" th:href="@{/(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
-                </div>
-            </div>
+    <div class="ui bottom attached segment">
+        <div class="ui mini pagination menu">
+            <!--多个查询条件用逗号隔开-->
+            <div class="item"><a  th:href="@{/search(query=${query})}">首页</a></div>
+            <div class="item"><a  th:href="@{/search(query=${query},pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}" >上一页</a></div>
+            <div class="item"><a  th:href="@{/search(query=${query},pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}" >下一页</a></div>
+            <div class="item"><a  th:href="@{/search(query=${query},pagenum=${pageInfo.pages})}">尾页</a></div>
         </div>
+    </div>
+    <div class="ui mini segment m-inline-block">
+        <p class="text m-font-color">当前第<span class="m-teal" th:text="${pageInfo.pageNum}"></span>页，总<span class="m-teal" th:text="${pageInfo.pages}"></span>页，共<span class="m-teal" th:text="${pageInfo.total}"></span>条记录</p>
+    </div>
     </div>
     <br>
     <br>
@@ -123,7 +125,7 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="../static/images/wechat.jpg" class="ui rounded image" style="width: 110px; height: 110px;">
+                        <img src="../static/images/wechat.png" class="ui rounded image" style="width: 110px; height: 110px;">
                     </div>
                 </div>
             </div>
@@ -138,8 +140,8 @@
             <div class="three wide column">
                 <h4 class="ui inverted header m-opacity-mini">联系我</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item m-text-thin">Email: lihaiyi_weiss@163.com</a>
-                    <a href="#" class="item m-text-thin">QQ: 1318714789</a>
+                    <a href="#" class="item m-text-thin">Email: whu_jianliu@163.com</a>
+                    <a href="#" class="item m-text-thin">QQ: 2431148967</a>
                 </div>
             </div>
             <div class="seven wide column">
@@ -150,7 +152,7 @@
             </div>
         </div>
         <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - 2019 weiss Designed by weiss</p>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2022  Designed by liujian</p>
     </div>
 </footer>
 
@@ -163,6 +165,12 @@
             $('.m-item').toggleClass('m-mobile-hide');
         })
     })
+
+    //清除输入框的内容
+    $("#clear-btn1")
+        .on('click', function(){
+            document.getElementById('searchBtn').value ="";
+        });
 </script>
 </body>
 </html>

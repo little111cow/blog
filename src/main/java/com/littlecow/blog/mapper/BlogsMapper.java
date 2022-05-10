@@ -68,4 +68,7 @@ public interface BlogsMapper {
 
     @Update("update t_blog set views = #{views} where id = #{bid} ")
     Boolean updateViewsById(@Param("bid")Long id,@Param("views") Integer views);
+
+    @Select("select * from t_blog where title like #{query} or content like #{query} order by update_time desc ")
+    List<Blog> searchGlobal(@Param("query") String query);
 }

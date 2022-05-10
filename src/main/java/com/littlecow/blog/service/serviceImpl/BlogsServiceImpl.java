@@ -32,6 +32,11 @@ public class BlogsServiceImpl implements BlogsService {
     }
 
     @Override
+    public List<Blog> searchGlobal(String query) {
+        return blogsMapper.searchGlobal("%"+query+"%"); //拼接字符串实现模糊查询
+    }
+
+    @Override
     public List<Blog> getBlogsByTypeId(Long type_id) {
         return blogsMapper.getBlogsByTypeId(type_id);
     }
