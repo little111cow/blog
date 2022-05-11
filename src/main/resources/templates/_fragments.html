@@ -31,7 +31,7 @@
                         <i onclick="document.forms['search'].submit()" class="search blue link icon"></i>
                     </div>
                 </form>
-                <button id="clear-btn1" class="m-item right item m-mobile-hide ui compact button">clear</button>
+                <button id="clear-btn1" onclick="document.getElementById('searchBtn').value = ''" class="m-item right item m-mobile-hide ui compact button">clear</button>
             </div>
         </div>
     </div>
@@ -102,16 +102,14 @@
     <script>
         $('#newBlog-container').load(/*[[@{/footer/newBlog}]]*/"/footer/newBlog");
     </script>
-
-    <script>
-        //清除输入框的内容
-        $("#clear-btn1")
-            .on('click', function(){
-                document.getElementById('searchBtn').value ="";
-            });
-    </script>
 </th:block>
-
+<script>
+    //清除输入框的内容
+    $("#clear-btn1")
+        .on('click', function(){
+            document.getElementById('searchBtn').value ="";
+        });
+</script>
 
 
 </body>

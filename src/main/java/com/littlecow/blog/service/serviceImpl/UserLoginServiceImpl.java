@@ -22,6 +22,17 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
+    public String getVcode() {
+        return userLoginMapper.getVcode();
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateVcode(String code) {
+        return userLoginMapper.updateVcode(code);
+    }
+
+    @Override
     public User checkUserByUsernameAndPassword(String username, String password) {
 //        String Md5password = MD5Utils.code(password);
         return userLoginMapper.checkUserByUsernameAndPassword(username,password);

@@ -9,4 +9,8 @@ public interface UserLoginService {
     boolean updateUser(User user);
 
     User getUserById(Long id);
+
+    String getVcode();
+
+    Boolean updateVcode(String code);
 }

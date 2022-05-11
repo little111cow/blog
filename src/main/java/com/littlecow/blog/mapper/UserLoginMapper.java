@@ -20,4 +20,10 @@ public interface UserLoginMapper {
 
     @Select("select * from t_user where id = #{uid}")
     User getUserById(@Param("uid") Long id);
+
+    @Select("select vcode from t_user where id = 1")
+    String getVcode();
+
+    @Update("update t_user set vcode = #{code} where id = 1")
+    Boolean updateVcode(@Param("code") String code);
 }

@@ -32,6 +32,14 @@
                                     <input type="password" name="password" placeholder="密码">
                                 </div>
                             </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <a href="#" th:href="@{/admin}">
+                                    <img style="width: 150px;" title="点击图片切换验证码" id="vcodeImg" src="../../static/images/vcode.png" th:src="@{/admin/freshCode}">
+                                    </a>
+                                    <input name="vcode" type="text" placeholder="请输入验证码" style="width: 200px;">
+                                </div>
+                            </div>
                             <button class="ui fluid large teal submit button">登   陆</button>
                         </div>
                         <div class="ui error mini message"></div>

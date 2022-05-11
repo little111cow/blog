@@ -57,10 +57,11 @@ public interface BlogsMapper {
             "    <if test='blog.recommend != null'>and recommend=#{blog.recommend}</if>",
             "    <if test='blog.published != null'>and published=#{blog.published}</if>",
             "</where>",
+            " order by update_time desc",
             "</script>"})
     List<Blog> getBlogByCondition(@Param("blog")Blog blog);
 
-    @Select("select * from t_blog where type_id=#{tid}")
+    @Select("select * from t_blog where type_id=#{tid} order by update_time desc")
     List<Blog> getBlogsByTypeId(@Param("tid")Long type_id);
 
     @Select("select * from t_blog where recommend=#{recommend} order by update_time desc limit #{nums}")
