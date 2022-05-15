@@ -43,7 +43,7 @@
             <div class="ui horizontal link list">
                 <div class="item">
                     <!-- 头像地址：  th:src="@{${blog.user.avatar}}" -->
-                    <img src="../static/images/avatar.jpg" th:src="@{/images/avatar.jpg}" style="width: 25px; height:25px" alt="" class="ui avatar image">
+                    <img src="../static/files/avatar.jpg" th:src="@{/files/avatar.jpg}" style="width: 25px; height:25px" alt="" class="ui avatar image">
                     <div class="content"><a class="header" th:text="${blog.user.nickname}">刘健</a></div>
                 </div>
                 <div class="item">
@@ -531,7 +531,7 @@ h5,h6{font-size:1em;}
                             <div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
                                 <div class="comment" th:each="reply : ${comment.replyComments}">
                                     <a class="avatar">
-                                        <img src="../static/images/avatar.jpg" th:src="@{${reply.avatar}}">
+                                        <img src="../static/files/avatar.jpg" th:src="@{${reply.avatar}}">
                                     </a>
                                     <div class="content">
                                         <a class="author" >

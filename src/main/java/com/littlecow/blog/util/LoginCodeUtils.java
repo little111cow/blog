@@ -24,11 +24,11 @@ public class LoginCodeUtils {
         //设置背景颜色
         graphic.setBackground(Color.white);
         //设置背景
-        graphic.setColor(Color.gray);
+        graphic.setColor(Color.lightGray);
         //填充一个矩形框
         graphic.fillRect(0,0,80,20);
         //写字体颜色
-        graphic.setColor(Color.blue);
+        graphic.setColor(Color.black);
         //字体属性
         graphic.setFont(new Font(null,Font.BOLD,20));
         //写入字符串

@@ -38,7 +38,7 @@ public class UserLoginController {
         resp.setHeader("refresh","5");
         //获得验证码字符串
         String code = LoginCodeUtils.getRandomCode();
-        userLoginService.updateVcode(code);  //保存验证码
+        userLoginService.updateVcode(code);  //保存验证码到数据库便于登录时验证
         //用BufferImage实现验证码并写入code
         BufferedImage image = LoginCodeUtils.getLoginImage(code);
         //http响应内容类型
@@ -69,11 +69,11 @@ public class UserLoginController {
         User user = userLoginService.checkUserByUsernameAndPassword(username,password);
         if(user != null&&StringUtils.pathEquals(username,user.getUsername())
                 &&StringUtils.pathEquals(password,user.getPassword())){
-            session.setAttribute(Contants.USER_SESSION,user);  //保存登录状态
             if(!StringUtils.pathEquals(vcode.toLowerCase(),userLoginService.getVcode().toLowerCase())){  //忽略大小写区别
                 attributes.addFlashAttribute(Contants.MESSAGE,"验证码错误!");
                 return "redirect:/admin";
             }
+            session.setAttribute(Contants.USER_SESSION,user);  //保存登录状态
             return "admin/index";
         }else{
             attributes.addFlashAttribute(Contants.MESSAGE,"用户名字或者密码错误");

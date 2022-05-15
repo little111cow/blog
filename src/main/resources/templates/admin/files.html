@@ -3,21 +3,21 @@
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标签管理</title>
+    <title>文件上传和下载</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css"/>
     <link rel="stylesheet" type="text/css" href="../../static/css/me.css"/>
 </head>
 <body>
 <!--  导航 -->
-<nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="admin/_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">littlecow</h2>
-            <a target="_blank" href="#" class=" m-item item m-mobile-hide"><i class="mini warehouse icon"></i>&nbsp;&nbsp;前台首页&nbsp;&nbsp;</a>
-            <a href="#" class=" m-item item m-mobile-hide"><i class="mini home icon"></i>&nbsp;&nbsp;博客&nbsp;&nbsp;</a>
+            <a href="#" class="m-item item m-mobile-hide" target="_blank"><i class="mini warehouse icon"></i>&nbsp;&nbsp;前台首页&nbsp;&nbsp;</a>
+            <a href="#" th:href="@{/admin/blogs}" class="m-item item m-mobile-hide"><i class="mini home icon"></i>&nbsp;&nbsp;博客&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>&nbsp;&nbsp;分类管理&nbsp;&nbsp;</a>
-            <a href="#" class="active m-item item m-mobile-hide"><i class="mini tags icon"></i>&nbsp;&nbsp;标签管理&nbsp;&nbsp;</a>
-            <a href="#" class=" m-item item m-mobile-hide"><i class="mini folder icon"></i>&nbsp;&nbsp;文件管理&nbsp;&nbsp;</a>
+            <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>&nbsp;&nbsp;标签管理&nbsp;&nbsp;</a>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="mini folder icon"></i>&nbsp;&nbsp;文件管理&nbsp;&nbsp;</a>
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
                     <div class="text">
@@ -38,15 +38,6 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-<!-- 二级导航 -->
-<div class="ui attached pointing menu">
-    <div class="ui container">
-        <div class="right menu">
-            <a href="#" th:href="@{/admin/tags/input}" class="item">发布</a>
-            <a href="#" th:href="@{/admin/tags}" class="teal active item">列表</a>
-        </div>
-    </div>
-</div>
 
 <!-- content -->
 <div class="m-container-small m-padded-tb-big">
@@ -62,17 +53,21 @@
             <thead>
             <tr>
                 <th></th>
-                <th>名称</th>
+                <th>文件名称</th>
+                <th>文件类型</th>
+                <th>上传时间</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="tags, iterStat : ${pageInfo.list}">
+            <tr th:each="file, iterStat : ${pageInfo.list}">
                 <td th:text="${iterStat.count}">1</td>
-                <td th:text="${tags.name}">可以联系清单</td>
+                <td th:text="${file.fileName}">可以联系清单</td>
+                <td th:text="${file.fileSuffix}">txt</td>
+                <td class="ui center aligned" th:text="${#dates.format(file.uploadTime, 'yyyy-MM-dd HH:mm:ss')}">2019-09-20 00:45</td>
                 <td>
-                    <a href="#" th:href="@{/admin/tags/{id}/input(id=${tags.id})}" class="ui mini teal basic button">编辑</a>
-                    <a href="#" th:href="@{/admin/tags/{id}/delete(id=${tags.id})}" class="ui mini red basic button">删除</a>
+                    <a href="#" th:href="@{/admin/files/{id}/download(id=${file.id})}" class="ui mini teal basic button">下载</a>
+                    <a href="#" th:href="@{/admin/files/{id}/delete(id=${file.id})}" class="ui mini red basic button">删除</a>
                 </td>
             </tr>
             </tbody>
@@ -80,18 +75,29 @@
             <tr>
                 <th colspan="6">
                     <div class="ui mini pagination menu">
-                        <div class="item"><a th:href="@{/admin/tags}">首页</a></div>
-                        <div class="item"><a th:href="@{/admin/tags(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
-                        <div class="item"><a th:href="@{/admin/tags(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
-                        <div class="item"><a th:href="@{/admin/tags(pagenum=${pageInfo.pages})}">尾页</a></div>
+                        <div class="item"><a th:href="@{/admin/files}">首页</a></div>
+                        <div class="item"><a th:href="@{/admin/files(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
+                        <div class="item"><a th:href="@{/admin/files(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
+                        <div class="item"><a th:href="@{/admin/files(pagenum=${pageInfo.pages})}">尾页</a></div>
                     </div>
-                    <a href="#" th:href="@{/admin/tags/input}" class="ui right floated mini green button">新增</a>
                 </th>
             </tr>
             </tfoot>
         </table>
         <div class="ui mini segment m-inline-block">
             <p class="text m-font-color">当前第<span class="m-teal" th:text="${pageInfo.pageNum}"></span>页，总<span class="m-teal" th:text="${pageInfo.pages}"></span>页，共<span class="m-teal" th:text="${pageInfo.total}"></span>条记录</p>
+        </div>
+        <div class="ui mini segment">
+            <form th:action="@{/admin/files/upload}" method="POST" enctype="multipart/form-data">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="isAvatar" name="isAvatar">
+                        <label for="isAvatar">头像</label>
+                    </div>
+                </div>
+                上传文件：<input class="ui mini item teal" type="file" name="file"/>
+                <input type="submit" class="ui right floated mini green button" placeholder="上传" value="上传"/>
+            </form>
         </div>
     </div>
 </div>
@@ -106,7 +112,7 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="../../static/images/wechat.png" class="ui rounded image"
+                        <img src="../../static/images/wechat.png" th:src="@{/images/wechat.png}" class="ui rounded image"
                              style="width: 110px; height: 110px;">
                     </div>
                 </div>
@@ -167,7 +173,9 @@
                     .closest('.message')
                     .transition('fade');
             })
+
     })
+
 </script>
 </body>
 </html>
