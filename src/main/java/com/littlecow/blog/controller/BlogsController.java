@@ -11,6 +11,7 @@ import com.littlecow.blog.exception.NotFoundException;
 import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.TagsService;
 import com.littlecow.blog.service.TypesService;
+import com.littlecow.blog.util.RandomAvatarUtils;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,7 +88,7 @@ public class BlogsController {
         blog.setCommentabled(true);
         blog.setAppreciation(true);
        //给定一个默认初始首图,这样写的时候就可以不用每次单独找图片，首图资源地址需要抓包获取
-        blog.setFirstPicture(Contants.DEFAULT_FIRST_PICTURE_URL);
+        blog.setFirstPicture(RandomAvatarUtils.RandPicture());
         List<Tag> tags = tagsService.getTagList();
         List<Type> types = typesService.getTypeList();
 

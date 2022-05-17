@@ -34,7 +34,7 @@ public class FileController {
 
     @RequestMapping("/files/upload")
     public String uploadFile(@RequestParam("file")MultipartFile file,
-                             @RequestParam("isAvatar")Boolean isAvatar,
+                             @RequestParam(defaultValue = "false")Boolean isAvatar,
                              RedirectAttributes attributes){
         if (file.isEmpty()) {
             attributes.addFlashAttribute(Contants.MESSAGE,"文件为空！");

@@ -41,8 +41,8 @@ public class BlogController {
             tags = tagsService.getTagByIds(tagIds);
         }
         blog.setTags(tags);
-        List<Comment> comments = new ArrayList<>();
-        model.addAttribute("comments",comments);
+//        List<Comment> comments = new ArrayList<>();
+//        model.addAttribute("comments",comments);
         model.addAttribute(Contants.BLOG,blog);
         return "blog";
     }

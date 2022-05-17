@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,5 +23,12 @@ public class Comment implements Serializable {
     private Date createTime;
     private Long blogId;
     private Long parentCommentId;
-    private Integer admincomment;
+    private Boolean admincomment;
+    //父评论
+    private Comment parentComment;
+
+    private Blog blog;
+
+    //回复评论
+    private List<Comment> replyComments = new ArrayList<>();
 }
