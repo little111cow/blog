@@ -37,13 +37,13 @@ public class IndexController {
     @RequestMapping({"/index","/"})
     public String index(@RequestParam(defaultValue = "1") int pagenum, Model model){
         PageHelper.startPage(pagenum, Contants.PAGE_SIZE);  //跟着后边一个select语句会被分页
-        List<Blog> blogList = blogsService.getBlogList();
+        List<Blog> blogList = blogsService.getBlogListPublished();  //此处需要分隔发布状态和草稿状态的博客
 
         PageInfo<Blog> pageInfo = new PageInfo<>(controllerUtils.setBlogTypeTagUser(blogList));
         model.addAttribute(Contants.PAGE_INFO,pageInfo);
 
         List<Tag> tags = tagsService.getTagListLimit(Contants.RECOMMEND_NUMS);
-        List<Blog> allBlogs = blogsService.getBlogList();
+        List<Blog> allBlogs = blogsService.getBlogListPublished();  //此处需要分隔发布状态和草稿状态的博客
         for(Tag tag:tags){
             //通过tagid获取到对应的所有博客
             List<Blog> blogs = controllerUtils.getBlogsByTagId(tag.getId(),allBlogs);
@@ -53,12 +53,12 @@ public class IndexController {
 
         List<Type> types = typesService.getTypeListLimit(Contants.RECOMMEND_NUMS);
         for(Type type:types){
-            List<Blog> blogs = blogsService.getBlogsByTypeId(type.getId());
+            List<Blog> blogs = blogsService.getBlogsByTypeId(type.getId()); //此处需要分隔发布状态和草稿状态的博客
             type.setBlogs(blogs);
         }
         model.addAttribute("types",types);
 
-        List<Blog> recommendBlogs = blogsService.getBlogsByRecommendFlag(true,Contants.RECOMMEND_NUMS);
+        List<Blog> recommendBlogs = blogsService.getBlogsByRecommendFlag(true,Contants.RECOMMEND_NUMS); //此处需要分隔发布状态和草稿状态的博客
         model.addAttribute("recommendBlogs",recommendBlogs);
         return "index";
     }
@@ -70,7 +70,7 @@ public class IndexController {
 
     @RequestMapping("/archives")
     public String archives(Model model){
-        List<Blog> blogList = blogsService.getBlogList();
+        List<Blog> blogList = blogsService.getBlogListPublished();
         int blogCount = blogList.size();
         Map<Integer,Set<Blog>> archiveMap = controllerUtils.archivesByUpdateYear(blogList);
         model.addAttribute("archiveMap",archiveMap);
@@ -86,7 +86,7 @@ public class IndexController {
            return "search";
         }
         PageHelper.startPage(pagenum,Contants.PAGE_SIZE);
-        List<Blog> blogList = blogsService.searchGlobal(query);
+        List<Blog> blogList = blogsService.searchGlobal(query);  //此处需要分隔发布状态和草稿状态的博客
 
         PageInfo<Blog> pageInfo = new PageInfo<>(controllerUtils.setBlogTypeTagUser(blogList));
         if(blogList.size() == 0){pageInfo.setPageNum(0);}  //空数据时将默认pagenum =1置0

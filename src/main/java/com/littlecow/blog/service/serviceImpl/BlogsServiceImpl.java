@@ -116,4 +116,9 @@ public class BlogsServiceImpl implements BlogsService {
         return blogsMapper.getBlogList();
     }
 
+    @Override
+    public List<Blog> getBlogListPublished() {
+        return blogsMapper.getBlogListPublished();
+    }
+
 }

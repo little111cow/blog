@@ -7,6 +7,8 @@ import java.util.List;
 public interface BlogsService {
     List<Blog> getBlogList();
 
+    List<Blog> getBlogListPublished();
+
     boolean addBlog(Blog blog);
 
     boolean deleteBlogById(Long id);

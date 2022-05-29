@@ -31,7 +31,7 @@ public class TagsController {
         List<Tag> list = tagsService.getTagList();
         PageInfo<Tag> pageInfo = new PageInfo<>(list);
         model.addAttribute(Contants.PAGE_INFO,pageInfo);
-        return "/admin/tags";
+        return "admin/tags";
     }
 
     @RequestMapping("/tags/input")

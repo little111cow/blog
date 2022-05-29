@@ -29,7 +29,10 @@ pagehelper:
     params: count=countSql
 
 server:
-  port: 8080
+  port: 9090
+  max-http-header-size: 20480
+  tomcat:
+    max-http-form-post-size: 204800
 #  ��־����
 logging:
   file:

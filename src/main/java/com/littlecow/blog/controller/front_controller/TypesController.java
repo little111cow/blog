@@ -37,18 +37,18 @@ public class TypesController {
         List<Blog> blogList = new ArrayList<>();
         if(activeTypeId == -1L) {  //若目前活动类型为-1，默认将所有type和博客列表查询出来
             PageHelper.startPage(pagenum, Contants.PAGE_SIZE);  //跟着后边一个select语句会被分页
-            blogList = blogsService.getBlogList();
+            blogList = blogsService.getBlogListPublished(); //此处需要分隔发布状态和草稿状态的博客
         }else{
             //通过typeid查询对应的所有博客
             PageHelper.startPage(pagenum, Contants.PAGE_SIZE);
-            blogList = blogsService.getBlogsByTypeId(activeTypeId);
+            blogList = blogsService.getBlogsByTypeId(activeTypeId);  //此处需要分隔发布状态和草稿状态的博客
         }
         PageInfo<Blog> pageInfo = new PageInfo<>(controllerUtils.setBlogTypeTagUser(blogList));
 
         List<Type> types = typesService.getTypeList();
         for (Type type : types) {
             //通过typeid获取到对应的所有博客
-            List<Blog> blogs = blogsService.getBlogsByTypeId(type.getId());
+            List<Blog> blogs = blogsService.getBlogsByTypeId(type.getId());  //此处需要分隔发布状态和草稿状态的博客
             type.setBlogs(blogs);
         }
         model.addAttribute("types", types);

@@ -12,6 +12,9 @@ public interface BlogsMapper {
     @Select("select * from t_blog order by update_time desc,create_time desc ")
     List<Blog> getBlogList();
 
+    @Select("select * from t_blog where published = 1 order by update_time desc,create_time desc ")
+    List<Blog> getBlogListPublished();
+
     @Insert("insert into t_blog(title,content,first_picture,flag,views,appreciation,share_statement,commentabled," +
             "published,recommend,create_time,update_time,type_id,user_id,description,tag_ids) values(#{blog.title}," +
             "#{blog.content},#{blog.firstPicture},#{blog.flag},#{blog.views},#{blog.appreciation}," +
@@ -61,15 +64,15 @@ public interface BlogsMapper {
             "</script>"})
     List<Blog> getBlogByCondition(@Param("blog")Blog blog);
 
-    @Select("select * from t_blog where type_id=#{tid} order by update_time desc")
+    @Select("select * from t_blog where type_id=#{tid} and published = 1 order by update_time desc")
     List<Blog> getBlogsByTypeId(@Param("tid")Long type_id);
 
-    @Select("select * from t_blog where recommend=#{recommend} order by update_time desc limit #{nums}")
+    @Select("select * from t_blog where recommend=#{recommend} and published = 1 order by update_time desc limit #{nums}")
     List<Blog> getBlogsByRecommendFlag(@Param("recommend")Boolean recommend,@Param("nums") Integer nums);
 
     @Update("update t_blog set views = #{views} where id = #{bid} ")
     Boolean updateViewsById(@Param("bid")Long id,@Param("views") Integer views);
 
-    @Select("select * from t_blog where title like #{query} or content like #{query} order by update_time desc ")
+    @Select("select * from t_blog where published = 1 and title like #{query} or content like #{query} order by update_time desc ")
     List<Blog> searchGlobal(@Param("query") String query);
 }

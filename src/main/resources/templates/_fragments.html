@@ -32,6 +32,8 @@
                     </div>
                 </form>
                 <button id="clear-btn1" onclick="document.getElementById('searchBtn').value = ''" class="m-item right item m-mobile-hide ui compact button">clear</button>
+                <!--显示日期时间-->
+                <h6 style="color:royalblue" id="dateTime"></h6>
             </div>
         </div>
     </div>
@@ -102,6 +104,40 @@
     <script>
         $('#newBlog-container').load(/*[[@{/footer/newBlog}]]*/"/footer/newBlog");
     </script>
+
+    <!--显示时间日期-->
+    <script type="text/javascript">
+        /**
+         *获取当前时间
+         *format=1精确到天
+         *format=2精确到分
+         */
+        function getCurrentDate() {
+            var now = new Date();
+            var year = now.getFullYear(); //得到年份
+            var month = now.getMonth();//得到月份
+            var date = now.getDate();//得到日期
+            var day = now.getDay();//得到周几
+            var hour = now.getHours();//得到小时
+            var minu = now.getMinutes();//得到分钟
+            var sec = now.getSeconds();//得到秒
+            month = month + 1;
+            if (month < 10) month = "0" + month;
+            if (date < 10) date = "0" + date;
+            if (hour < 10) hour = "0" + hour;
+            if (minu < 10) minu = "0" + minu;
+            if (sec < 10) sec = "0" + sec;
+            var time = "";
+            //精确到分
+            time = year + "年" + month + "月" + date+ "日  " + hour + ":" + minu + ":" + sec;
+            return time;
+        }
+    </script>
+    <script type="text/javascript">
+        setInterval(function() {
+            $('#dateTime').text("时间: "+ getCurrentDate());
+        }, 1000);
+    </script>
 </th:block>
 <script>
     //清除输入框的内容
@@ -109,6 +145,8 @@
         .on('click', function(){
             document.getElementById('searchBtn').value ="";
         });
+
+    $('.ui.dropdown').dropdown();
 </script>
 
 

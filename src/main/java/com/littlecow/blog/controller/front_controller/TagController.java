@@ -35,10 +35,10 @@ public class TagController {
     public String toTags(@RequestParam(defaultValue = "1") int pagenum, Model model,
                          @PathVariable Long activeTagId){
         List<Blog> blogList = new ArrayList<>(); //避免为null时渲染错误
-        List<Blog> allBlogs = blogsService.getBlogList();
+        List<Blog> allBlogs = blogsService.getBlogListPublished();  //此处需要分隔发布状态和草稿状态的博客
         if(activeTagId == -1L) {  //若目前活动标签为-1，默认将所有tag和博客列表查询出来
             PageHelper.startPage(pagenum, Contants.PAGE_SIZE);  //跟着后边一个select语句会被分页
-            blogList = blogsService.getBlogList();
+            blogList = blogsService.getBlogListPublished();  //此处需要分隔发布状态和草稿状态的博客
         }else{
             //通过tagid查询对应的所有博客
             PageHelper.startPage(pagenum, Contants.PAGE_SIZE);  //跟着后边一个select语句会被分页
