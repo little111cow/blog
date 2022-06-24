@@ -33,12 +33,12 @@ class BlogApplicationTests {
 
 	}
 
-//	@Test
-//	void TestUserLoginService(){
+	@Test
+	void TestUserLoginService(){
 //		User user =userLoginService.checkUserByUsernameAndPassword("Admin","1234567");
 //		System.out.println(user);
-//
-//	}
+//        System.out.println(System.getProperty("user.dir"));
+    }
 
 //	@Test
 //	void TestBlogAdd(){
