@@ -49,6 +49,7 @@ public class IndexController {
             List<Blog> blogs = controllerUtils.getBlogsByTagId(tag.getId(),allBlogs);
             tag.setBlogs(blogs);
         }
+        Collections.sort(tags);
         model.addAttribute("tags",tags);
 
         List<Type> types = typesService.getTypeListLimit(Contants.RECOMMEND_NUMS);
@@ -56,6 +57,7 @@ public class IndexController {
             List<Blog> blogs = blogsService.getBlogsByTypeId(type.getId()); //此处需要分隔发布状态和草稿状态的博客
             type.setBlogs(blogs);
         }
+        Collections.sort(types);
         model.addAttribute("types",types);
 
         List<Blog> recommendBlogs = blogsService.getBlogsByRecommendFlag(true,Contants.RECOMMEND_NUMS); //此处需要分隔发布状态和草稿状态的博客
