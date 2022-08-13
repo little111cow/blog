@@ -37,6 +37,11 @@ public class BlogsServiceImpl implements BlogsService {
     }
 
     @Override
+    public List<Blog> getHotBlogs(Integer nums) {
+        return blogsMapper.getHotBlogs(nums);
+    }
+
+    @Override
     public List<Blog> getBlogsByTypeId(Long type_id) {
         return blogsMapper.getBlogsByTypeId(type_id);
     }

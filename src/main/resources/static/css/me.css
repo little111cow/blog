@@ -71,6 +71,10 @@ body {
     font-weight: 300 !important;
 }
 
+.m-text-thinthin {
+    font-weight: 100 !important;
+}
+
 .m-text-spaced {
     letter-spacing: 1px !important;
 }

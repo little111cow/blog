@@ -59,7 +59,9 @@ public class IndexController {
         model.addAttribute("types",types);
 
         List<Blog> recommendBlogs = blogsService.getBlogsByRecommendFlag(true,Contants.RECOMMEND_NUMS); //此处需要分隔发布状态和草稿状态的博客
+        List<Blog> hotBlogs = blogsService.getHotBlogs(Contants.HOT_BLOG_NUMS); //此处需要分隔发布状态和草稿状态的博客
         model.addAttribute("recommendBlogs",recommendBlogs);
+        model.addAttribute("hotBlogs", hotBlogs);
         return "index";
     }
 

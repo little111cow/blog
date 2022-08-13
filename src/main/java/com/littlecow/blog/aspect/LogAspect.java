@@ -33,7 +33,6 @@ public class LogAspect {
         }
 
         public RequestLog() {
-
         }
 
         @Override

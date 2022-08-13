@@ -10,4 +10,5 @@ public class Contants {
     public static final String BLOG = "blog";
     public static final String PAGE_INFO = "pageInfo";
     public static final int RECOMMEND_NUMS = 5;  //前台展示的推荐博客条数,type数，tag数
+    public static final int HOT_BLOG_NUMS = 5;  //前台展示的热门博客条数
 }

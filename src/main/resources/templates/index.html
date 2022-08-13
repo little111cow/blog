@@ -201,6 +201,28 @@
                         <a class="m-black m-text-thin" href="" target="_blank" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}">用户故事（User Story）</a>
                     </div>
 
+                    <!--/*-->
+                    <div class="ui segment">
+                        <a class="m-black m-text-thin" href="" target="_blank">用户故事（User Story）</a>
+                    </div>
+                    <div class="ui segment">
+                        <a class="m-black m-text-thin" href="" target="_blank">用户故事（User Story）</a>
+                    </div>
+                    <div class="ui segment">
+                        <a class="m-black m-text-thin" href="" target="_blank">用户故事（User Story）</a>
+                    </div>
+                    <!--*/-->
+                </div>
+                <!-- 热门文章 -->
+                <div class="ui segments m-margin-top-large">
+                    <div class="ui secondary segment">
+                        <i class="fire icon"></i>热门文章
+                    </div>
+
+                    <div class="ui segment" th:each="blog : ${hotBlogs}">
+                        <a class="m-black m-text-thin" href="" target="_blank" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}">用户故事（User Story）</a>
+                        <div class="ui black basic left pointing label m-text-thinthin" th:text="${blog.views} + '次浏览'">13次浏览</div>
+                    </div>
 
                     <!--/*-->
                     <div class="ui segment">
@@ -213,7 +235,6 @@
                         <a class="m-black m-text-thin" href="" target="_blank">用户故事（User Story）</a>
                     </div>
                     <!--*/-->
-
                 </div>
                 <!-- 二维码 -->
                 <h4 class="ui horizontal divider header m-margin-top-large">扫码关注我</h4>
@@ -300,7 +321,7 @@
     </script>
     <script type="text/javascript">
         setInterval(function() {
-            $('#dateTime').text("时间: "+ getCurrentDate());
+            $('#dateTime').text(getCurrentDate());
         }, 1000);
     </script>
 /*/</th:block>/*/

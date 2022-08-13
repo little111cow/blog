@@ -75,4 +75,7 @@ public interface BlogsMapper {
 
     @Select("select * from t_blog where published = 1 and title like #{query} or content like #{query} order by update_time desc ")
     List<Blog> searchGlobal(@Param("query") String query);
+
+    @Select("select * from t_blog where published = 1 order by views desc,update_time desc limit #{nums}")
+    List<Blog> getHotBlogs(@Param("nums") Integer nums);  // 查询查看次数最多的限定数量文章
 }

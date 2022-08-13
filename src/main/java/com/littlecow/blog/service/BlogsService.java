@@ -29,4 +29,6 @@ public interface BlogsService {
     Boolean updateViews(Blog blog);
 
     List<Blog> searchGlobal(String query);
+
+    List<Blog> getHotBlogs(Integer nums);
 }

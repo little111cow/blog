@@ -18,7 +18,7 @@
 <nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
-            <h2 class="ui teal header item">littlecow</h2>
+            <a href="#" th:href="@{/admin/index}"><h2 class="ui teal header item">littlecow</h2></a>
             <a target="_blank" href="#" th:href="@{/index}" class="m-item item m-mobile-hide" ><i class="mini warehouse icon"></i>&nbsp;&nbsp;前台主页&nbsp;&nbsp;</a>
             <a href="#" th:href="@{/admin/blogs}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>&nbsp;&nbsp;博客&nbsp;&nbsp;</a>
             <a href="#" th:href="@{/admin/types}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>&nbsp;&nbsp;分类管理&nbsp;&nbsp;</a>
@@ -26,7 +26,7 @@
             <a href="#" th:href="@{/admin/files}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini folder icon"></i>&nbsp;&nbsp;文件管理&nbsp;&nbsp;</a>
             <div class="right m-item m-mobile-hide menu">
                 <!--显示日期时间-->
-                <h6 style="color:royalblue" id="dateTime"></h6>
+                <h6 class="ui teal item" id="dateTime"></h6>
                 <div class="ui dropdown item">
                     <div class="text">
                         <!-- th:src="@{session.user.avatar}" -->
@@ -83,6 +83,7 @@
             </div>
         </div>
         <div class="ui inverted section divider"></div>
+        <a href="https://beian.miit.gov.cn/" class="m-text-thin m-text-spaced m-opacity-tiny m-opacity-tiny" style="color: aliceblue" target="_blank">备案号:川ICP备000000000019号</a>
         <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2022  Designed by liujian</p>
     </div>
 </footer>
@@ -126,7 +127,7 @@
     </script>
     <script type="text/javascript">
         setInterval(function() {
-            $('#dateTime').text("时间: "+ getCurrentDate());
+            $('#dateTime').text(getCurrentDate());
         }, 1000);
     </script>
 </th:block>
