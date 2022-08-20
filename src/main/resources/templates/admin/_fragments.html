@@ -26,8 +26,19 @@
             <a href="#" th:href="@{/admin/files}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini folder icon"></i>&nbsp;&nbsp;文件管理&nbsp;&nbsp;</a>
             <a href="#" th:href="@{/admin/data}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="mini signal icon"></i>&nbsp;&nbsp;数据统计&nbsp;&nbsp;</a>
             <div class="right m-item m-mobile-hide menu">
-                <!--显示日期时间-->
-                <h6 class="ui teal item" id="dateTime"></h6>
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <i class="angle double right icon"></i>更多功能
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item teal"><i class="mini linkify icon"></i>友链管理</a>
+                        <a href="#" class="item teal"><i class="mini location arrow icon"></i>网站导航</a>
+                        <a href="#" class="item teal"><i class="mini bell icon"></i>公告</a>
+                    </div>
+                </div>
+            </div>
+            <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
                     <div class="text">
                         <!-- th:src="@{session.user.avatar}" -->
@@ -81,6 +92,8 @@
                 <p class="m-text-thin m-text-spaced m-opacity-mini">
                     这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...
                 </p>
+                <!--显示日期时间-->
+                <h6 class="ui teal item" id="dateTime"></h6>
             </div>
         </div>
         <div class="ui inverted section divider"></div>

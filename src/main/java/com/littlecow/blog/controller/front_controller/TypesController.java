@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,6 +52,7 @@ public class TypesController {
             List<Blog> blogs = blogsService.getBlogsByTypeId(type.getId());  //此处需要分隔发布状态和草稿状态的博客
             type.setBlogs(blogs);
         }
+        Collections.sort(types);
         model.addAttribute("types", types);
         model.addAttribute(Contants.PAGE_INFO, pageInfo);
         return "types";

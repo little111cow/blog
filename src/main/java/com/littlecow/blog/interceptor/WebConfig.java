@@ -13,6 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin","/admin/login","/admin/freshCode");
+                .excludePathPatterns("/admin","/admin/login","/admin/freshCode","/admin/email","/admin/freshEmailCode");
     }
 }

@@ -47,24 +47,26 @@ public class CommenControllerUtils {
     }
 
     /*根据年份归档，返回归档map*/
-    public  Map<Integer,Set<Blog>> archivesByUpdateYear(List<Blog> blogList){
-        Map<Integer,Set<Blog>> archiveMap = new TreeMap<>(new Comparator<Integer>() {
+    public  Map<String,Set<Blog>> archivesByUpdateYear(List<Blog> blogList){
+        Map<String,Set<Blog>> archiveMap = new TreeMap<>(new Comparator<String>() {
             @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2-o1;
+            public int compare(String o1, String o2) {
+                return o2.compareTo(o1);
             }
         });
         for(Blog blog:blogList){
             Date date =  blog.getUpdateTime();
             Integer year = date.getYear()+1900;  //这是一个过时方法，jdk官方的解释需要加上1900
-            Set<Blog> list = archiveMap.getOrDefault(year,new TreeSet<>(new Comparator<Blog>() {
+            Integer month = date.getMonth() + 1;
+            String key = year + "/" + month;
+            Set<Blog> list = archiveMap.getOrDefault(key,new TreeSet<>(new Comparator<Blog>() {
                 @Override
                 public int compare(Blog o1, Blog o2) {
-                    return (int)(o2.getUpdateTime().getTime()-o1.getUpdateTime().getTime());
+                    return (o2.getUpdateTime().getTime()+"").compareTo(o1.getUpdateTime().getTime()+"");
                 }
             }));
             list.add(blog);
-            archiveMap.put(year,list);
+            archiveMap.put(key,list);
         }
         return archiveMap;
     }

@@ -57,6 +57,7 @@ public class BlogsController {
         model.addAttribute(Contants.PAGE_INFO,pageInfo);
         List<Type> types = typesService.getTypeList();
         model.addAttribute("types",types);
+        model.addAttribute("blog", new Blog());
         return "admin/blogs";
     }
 
@@ -178,6 +179,7 @@ public class BlogsController {
         List<Type> types = typesService.getTypeList();
         model.addAttribute("types",types);
         model.addAttribute(Contants.MESSAGE,"查询成功！");
+        model.addAttribute("blog", blog);
         return "admin/blogs::blogList";  //实现局部刷新，只刷新表单部分
     }
 

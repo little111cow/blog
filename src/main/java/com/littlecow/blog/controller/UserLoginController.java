@@ -34,7 +34,7 @@ public class UserLoginController {
         //设置浏览器5秒自动更新
         resp.setHeader("refresh","5");
         //获得验证码字符串
-        String code = LoginCodeUtils.getRandomCode();
+        String code = LoginCodeUtils.getRandomCode(4);
         userLoginService.updateVcode(code);  //保存验证码到数据库便于登录时验证
         //用BufferImage实现验证码并写入code
         BufferedImage image = LoginCodeUtils.getLoginImage(code);
@@ -59,6 +59,11 @@ public class UserLoginController {
         return "admin/login";
     }
 
+    @RequestMapping("/email")
+    public String loginByEmail(){
+        return "admin/login-email";
+    }
+
     //登录用户校验
     @RequestMapping("/login")
     public String login(@RequestParam String vcode,@RequestParam String username, @RequestParam String password,
@@ -76,6 +81,18 @@ public class UserLoginController {
             attributes.addFlashAttribute(Contants.MESSAGE,"用户名字或者密码错误");
             return "redirect:/admin";
         }
+    }
+
+    //登录用户校验
+    @RequestMapping("/loginByEmail")
+    public String loginByEmail(@RequestParam String email, @RequestParam String mailcode,
+                        HttpSession session, RedirectAttributes attributes){
+        return "admin/login-email";
+    }
+
+    @RequestMapping("/freshEmailCode")
+    public void freshEmailCode(){
+
     }
 
     //注销登录

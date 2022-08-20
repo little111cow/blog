@@ -56,6 +56,7 @@
                 <th>文件名称</th>
                 <th>文件类型</th>
                 <th>上传时间</th>
+                <th>发布状态</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -65,9 +66,11 @@
                 <td th:text="${file.fileName}">可以联系清单</td>
                 <td th:text="${file.fileSuffix}">txt</td>
                 <td class="ui center aligned" th:text="${#dates.format(file.uploadTime, 'yyyy-MM-dd HH:mm:ss')}">2019-09-20 00:45</td>
+                <td th:text="${file.published} ? 发布 : 未发布">发布</td>
                 <td>
-                    <a href="#" th:href="@{/admin/files/{id}/download(id=${file.id})}" class="ui mini teal basic button">下载</a>
+                    <a href="#" th:href="@{/files/{id}/download(id=${file.id})}" class="ui mini teal basic button">下载</a>
                     <a href="#" th:href="@{/admin/files/{id}/delete(id=${file.id})}" class="ui mini red basic button">删除</a>
+                    <a href="#" th:href="@{/admin/files/{id}/publish/{published}(id=${file.id},published = ! ${file.published})}" class="ui mini green basic button" th:text="!${file.published} ? 发布 : 取消发布">发布</a>
                 </td>
             </tr>
             </tbody>

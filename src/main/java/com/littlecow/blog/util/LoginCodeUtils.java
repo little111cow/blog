@@ -5,12 +5,12 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class LoginCodeUtils {
-    public static String getRandomCode(){
+    public static String getRandomCode(int length){
         //获得四位随机验证码串恒为四位
         String codeBase = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";//随机字符集
         Random random = new Random();
         StringBuffer sb= new StringBuffer();
-        for(int i=0;i<4;i++){
+        for(int i=0;i<length;i++){
             sb.append(codeBase.charAt(random.nextInt(codeBase.length())));
         }
         return sb.toString();

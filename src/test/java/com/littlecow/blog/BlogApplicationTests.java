@@ -7,6 +7,8 @@ import com.littlecow.blog.entity.Blog;
 import com.littlecow.blog.entity.User;
 import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.UserLoginService;
+import com.littlecow.blog.util.LoginCodeUtils;
+import com.littlecow.blog.util.MailUtils;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +32,15 @@ class BlogApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println(System.getProperty("os.name"));
+		System.out.println(System.getProperty("user.home"));
+	}
 
+	@Test
+    void TestSendMail(){
+//	    String verifyCode = LoginCodeUtils.getRandomCode(6);
+//		MailUtils.sendMail("whu_jianliu@163.com","验证码",
+//                "您的验证码：" + verifyCode + "，如非本人操作，请忽略！请勿回复此邮箱");
 	}
 
 	@Test

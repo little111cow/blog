@@ -16,31 +16,25 @@
                     <h2 class="ui teal image header">
                         <div class="content">
                             <div class="menu">
-                                <a href="#" th:href="@{/admin}" class="item teal">账号登陆</a>
+                                <a href="#"  th:href="@{/admin}" class="item teal">账号登陆</a>
                                 <a href="#" th:href="@{/admin/email}" class="item teal">邮箱登陆</a>
                             </div>
                         </div>
                     </h2>
-                    <form action="#" method="post" th:action="@{/admin/login}" class="ui large form">
+                    <form action="#" method="post" th:action="@{/admin/loginByEmail}" class="ui large form">
                         <div class="ui segment">
                             <div class="field">
                                 <div class="ui left icon input">
-                                    <i class="user icon"></i>
-                                    <input type="text" name="username" placeholder="用户名">
+                                    <i class="mail icon"></i>
+                                    <input type="email" name="email" placeholder="邮箱">
                                 </div>
                             </div>
                             <div class="field">
                                 <div class="ui left icon input">
-                                    <i class="lock icon"></i>
-                                    <input type="password" name="password" placeholder="密码">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui left icon input">
-                                    <a href="#" th:href="@{/admin}">
-                                    <img style="width: 150px;" title="点击图片切换验证码" id="vcodeImg" src="../../static/images/vcode.png" th:src="@{/admin/freshCode}">
+                                    <input name="mailcode" type="text" placeholder="请输入邮件验证码" style="width: 200px;">
+                                    <a href="#" th:src="@{/admin/freshEmailCode}">
+                                        <p>获取验证码</p>
                                     </a>
-                                    <input name="vcode" type="text" placeholder="请输入验证码(刷新或点击图片切换)" style="width: 200px;">
                                 </div>
                             </div>
                             <button class="ui fluid large teal submit button">登   陆</button>
@@ -63,18 +57,18 @@
     <!-- 用于表单验证 -->
     $(".ui.form").form({
         fields: {
-            username: {
-                identifier: 'username',
+            email: {
+                identifier: 'email',
                 rules: [{
                     type: 'empty',
-                    prompt: '请输入用户名'
+                    prompt: '请输入邮箱'
                 }]
             },
-            password: {
-                identifier: 'password',
+            mailcode: {
+                identifier: 'mailcode',
                 rules: [{
                     type: 'empty',
-                    prompt: '请输入密码'
+                    prompt: '请输入验证码'
                 }]
             }
         }

@@ -19,6 +19,17 @@ public class FileServiceImpl implements FileService{
     private FileMapper fileMapper;
 
     @Override
+    public List<File> getFileListPublished() {
+        return fileMapper.getFileListPublished();
+    }
+
+    @Override
+    @Transactional
+    public Boolean publish(Integer id, Boolean published) {
+        return fileMapper.publish(id, published);
+    }
+
+    @Override
     public File getFileByName(String filename, String suffix) {
         return fileMapper.getFileByName(filename,suffix);
     }
@@ -42,8 +53,7 @@ public class FileServiceImpl implements FileService{
             file1.setFileSuffix(suffixName);
             file1.setFileName(fileName.substring(0,fileName.lastIndexOf(".")));
             // 设置文件存储路径
-            org.springframework.core.io.Resource resource = new ClassPathResource("static/files/");
-            String filePath = resource.getFile().getPath();
+            String filePath = getFilePathByOs();
             file1.setPath(filePath);
             file1.setUploadTime(new Date());
             String path = filePath +"/"+ fileName;
@@ -81,17 +91,18 @@ public class FileServiceImpl implements FileService{
         return isOk;
     }
 
+    private String getFilePathByOs() {
+        String filePath = System.getProperty("user.home").replaceAll("\\\\", "/");
+        filePath += "/myapps/files";
+        return filePath;
+    }
+
     @Override
     @Transactional
     public Boolean deleteFileById(Integer id) {
         File file = getFileById(id);
-        String path = null;
-        org.springframework.core.io.Resource resource = new ClassPathResource("static/files/"+file.getFileNameWithExt());
-        try {
-            path = resource.getFile().getPath();  //读取文件路径
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String path = getFilePathByOs() + "/";
+        path += file.getFileNameWithExt();
         java.io.File file1;
         boolean ok = false;
         if(path != null) {

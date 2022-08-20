@@ -23,4 +23,9 @@ public interface FileService {
 
     @Transactional
     Boolean updateUploadTime(Integer id);
+
+    @Transactional
+    Boolean publish(Integer id, Boolean published);
+
+    List<File> getFileListPublished();
 }

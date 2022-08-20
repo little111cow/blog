@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,6 +54,7 @@ public class TagController {
             List<Blog> blogs = controllerUtils.getBlogsByTagId(tag.getId(), allBlogs);
             tag.setBlogs(blogs);
         }
+        Collections.sort(tags);
         model.addAttribute(Contants.PAGE_INFO, pageInfo);
         model.addAttribute("tags", tags);
         return "tags";

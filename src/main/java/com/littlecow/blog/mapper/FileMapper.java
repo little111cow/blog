@@ -12,6 +12,9 @@ public interface FileMapper {
     @Select("select * from t_file order by upload_time desc")
      List<File> getFileList();
 
+    @Select("select * from t_file where published = true order by upload_time desc")
+    List<File> getFileListPublished();
+
     @Select("select * from t_file where id = #{fid}")
     File getFileById(@Param("fid")Integer id);
 
@@ -26,4 +29,7 @@ public interface FileMapper {
 
     @Update("update t_file set upload_time = (select now()) where id = #{fid}")
     Boolean updateUploadTime(@Param("fid")Integer id);
+
+    @Update("update t_file set published = #{published} where id = #{fid}")
+    Boolean publish(@Param("fid") Integer id, @Param("published")Boolean published);
 }

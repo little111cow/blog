@@ -23,6 +23,8 @@ public class File implements Serializable {
 
     private Date uploadTime;
 
+    private Boolean published;
+
     public String getFileNameWithExt(){
         return fileName+"."+fileSuffix;
     }

@@ -18,12 +18,11 @@ import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
 public class FileController {
     @Resource
     private FileService fileService;
 
-    @RequestMapping("/files")
+    @RequestMapping("/admin/files")
     public String toFiles(@RequestParam(defaultValue = "1") int pagenum,  Model model){
         PageHelper.startPage(pagenum,Contants.PAGE_SIZE);
         List<File> fileList = fileService.getFileList();
@@ -32,7 +31,7 @@ public class FileController {
         return "admin/files";
     }
 
-    @RequestMapping("/files/upload")
+    @RequestMapping("/admin/files/upload")
     public String uploadFile(@RequestParam("file")MultipartFile file,
                              @RequestParam(defaultValue = "false")Boolean isAvatar,
                              RedirectAttributes attributes){
@@ -49,7 +48,27 @@ public class FileController {
         return "redirect:/admin/files";
     }
 
-    @RequestMapping("/files/{id}/delete")
+    @RequestMapping("/admin/files/{id}/publish/{published}")
+    public String publish(@PathVariable Boolean published,
+                          @PathVariable int id,
+                          RedirectAttributes attributes){
+        boolean isOk = fileService.publish(id, published);
+        if(isOk && published) {
+            attributes.addFlashAttribute(Contants.MESSAGE, "资源发布成功！");
+        }
+        if(isOk && !published) {
+            attributes.addFlashAttribute(Contants.MESSAGE, "成功取消资源发布！");
+        }
+        if(!isOk && published){
+            attributes.addFlashAttribute(Contants.MESSAGE,"资源发布失败！");
+        }
+        if(!isOk && !published) {
+            attributes.addFlashAttribute(Contants.MESSAGE,"取消资源发布失败！");
+        }
+        return "redirect:/admin/files";
+    }
+
+    @RequestMapping("/admin/files/{id}/delete")
     public String deleteFile(@PathVariable("id")Integer id, RedirectAttributes attributes){
         boolean isOk = fileService.deleteFileById(id);
         if(isOk) {
@@ -65,8 +84,7 @@ public class FileController {
     public String downloadFile(@PathVariable("id")Integer id,HttpServletResponse response){
        File file = fileService.getFileById(id);
         String filename = file.getFileNameWithExt();
-        String path = file.getPath();
-        String filepath = path+"/"+filename;
+        String filepath = getFilePathByOs() + "/"+filename;
         if(!"".equals(filepath)){
             java.io.File file1 = new java.io.File(filepath);
             if(file1.exists()){
@@ -113,4 +131,18 @@ public class FileController {
         return "下载失败！";
     }
 
+    private String getFilePathByOs() {
+        String filePath = System.getProperty("user.home").replaceAll("\\\\", "/");
+        filePath += "/myapps/files";
+        return filePath;
+    }
+
+    @RequestMapping("/files")
+    public String sourcePage(@RequestParam(defaultValue = "1") int pagenum,  Model model) {
+        PageHelper.startPage(pagenum,Contants.PAGE_SIZE);
+        List<File> fileList = fileService.getFileListPublished();
+        PageInfo<File> pageInfo = new PageInfo<>(fileList);
+        model.addAttribute("pageInfo",pageInfo);
+        return "files";
+    }
 }
