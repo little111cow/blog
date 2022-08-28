@@ -66,8 +66,10 @@
                                     <div class="eleven wide column">
                                         <div class="ui mini horizontal link list">
                                             <div class="item">
+                                                <a th:href="@{/about}">
                                                 <img src="../static/files/avatar.jpg" th:src="@{/files/avatar.jpg}"   alt="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}" >刘健</a></div>
+                                                </a>
+                                                <div class="content"><a th:href="@{/about}" class="header" th:text="${blog.user.nickname}" >刘健</a></div>
                                             </div>
                                             <div class="item">
                                                 <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2017-10-01</span>

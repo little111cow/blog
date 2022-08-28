@@ -44,7 +44,7 @@
     <div class="ui container">
         <div class="ui success large message">
             <h3>Hi,</h3>
-            <p>刘健,欢迎登录</p>
+            <p th:text="${session.user.nickname} + ',欢迎登录'">刘健,欢迎登录</p>
         </div>
 
         <img src="../../static/images/backend_bg.jpg" th:src="@{/images/backend_bg.jpg}" alt="" class="ui rounded bordered fluid image">

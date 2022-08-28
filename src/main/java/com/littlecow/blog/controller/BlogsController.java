@@ -182,6 +182,4 @@ public class BlogsController {
         model.addAttribute("blog", blog);
         return "admin/blogs::blogList";  //实现局部刷新，只刷新表单部分
     }
-
-
 }

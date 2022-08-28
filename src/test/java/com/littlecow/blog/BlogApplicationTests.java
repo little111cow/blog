@@ -1,22 +1,14 @@
 package com.littlecow.blog;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.littlecow.blog.controller.BlogsController;
-import com.littlecow.blog.entity.Blog;
-import com.littlecow.blog.entity.User;
 import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.UserLoginService;
-import com.littlecow.blog.util.LoginCodeUtils;
-import com.littlecow.blog.util.MailUtils;
+import com.littlecow.blog.util.DownloadImageUtils;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
 
 @SpringBootTest
 @Ignore
@@ -41,6 +33,12 @@ class BlogApplicationTests {
 //	    String verifyCode = LoginCodeUtils.getRandomCode(6);
 //		MailUtils.sendMail("whu_jianliu@163.com","验证码",
 //                "您的验证码：" + verifyCode + "，如非本人操作，请忽略！请勿回复此邮箱");
+	}
+
+	@Test
+	public void getImageUrlsTest(){
+		System.out.println(DownloadImageUtils.getImageUrlsByKeyWord("女人"));
+        System.out.println(DownloadImageUtils.getRandomImageFromInternet());
 	}
 
 	@Test

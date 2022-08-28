@@ -3,7 +3,10 @@ package com.littlecow.blog.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.littlecow.blog.Contants;
+import com.littlecow.blog.controller.front_controller.CommenControllerUtils;
+import com.littlecow.blog.entity.Blog;
 import com.littlecow.blog.entity.Tag;
+import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.TagsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,13 @@ import java.util.List;
 public class TagsController {
     @Resource
     private TagsService tagsService;
+
+    @Resource
+    private BlogsService blogsService;
+
+    @Resource
+    private CommenControllerUtils controllerUtils;
+
 
     @RequestMapping("/tags")
     public String toTagsPage(@RequestParam(defaultValue = "1",name = "pagenum") int pagenum, Model model){
@@ -59,13 +69,20 @@ public class TagsController {
 
     @RequestMapping("/tags/{id}/delete")
     public String deleteTagById(@PathVariable Long id,RedirectAttributes attributes){
+        List<Blog> blogs = blogsService.getBlogList();
+        int blogNums = controllerUtils.getBlogsByTagId(id, blogs).size();
+        if (blogNums > 0) {
+            attributes.addFlashAttribute(Contants.MESSAGE,
+                    "标签“" + tagsService.getTagById(id).getName() + "”存在博客，不能删除！");
+            return "redirect:/admin/tags";
+        }
         boolean deleteOk = tagsService.deleteTagById(id);
         if(deleteOk){
             attributes.addFlashAttribute(Contants.MESSAGE,"删除成功！");
             return "redirect:/admin/tags";
         }else{
             attributes.addFlashAttribute(Contants.MESSAGE,"删除失败！");
-            return "redirect:/admin/tags/input";
+            return "redirect:/admin/tags";
         }
     }
 

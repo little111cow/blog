@@ -3,7 +3,9 @@ package com.littlecow.blog.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.littlecow.blog.Contants;
+import com.littlecow.blog.entity.Blog;
 import com.littlecow.blog.entity.Type;
+import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.TypesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,9 @@ import java.util.List;
 public class TypeController {
     @Resource
     private TypesService typesService;
+
+    @Resource
+    private BlogsService blogsService;
 
     @RequestMapping("/types")
     public String getTypes(@RequestParam(required = false,defaultValue = "1",value = "pagenum")int pagenum, Model model,HttpSession session){
@@ -61,6 +66,14 @@ public class TypeController {
 
     @RequestMapping("/types/{id}/delete")
     public String deleteTypeById(@PathVariable Long id,RedirectAttributes attributes){
+        List<Blog> blogs = blogsService.getBlogList();
+        for (Blog blog : blogs) {
+            if (blog.getTypeId().equals(id)) {
+                attributes.addFlashAttribute(Contants.MESSAGE,
+                        "分类“" + typesService.getTypeById(id).getName() + "”存在博客，不能删除！");
+                return "redirect:/admin/types";
+            }
+        }
         if(typesService.deleteTypeById(id)){
             attributes.addFlashAttribute(Contants.MESSAGE,"删除成功！");
         }else{
