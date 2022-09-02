@@ -76,7 +76,7 @@ public class IndexController {
     public String archives(Model model){
         List<Blog> blogList = blogsService.getBlogListPublished();
         int blogCount = blogList.size();
-        Map<String,Set<Blog>> archiveMap = controllerUtils.archivesByUpdateYear(blogList);
+        Map<String,Set<Blog>> archiveMap = controllerUtils.archivesByCreateYear(blogList);
         model.addAttribute("archiveMap",archiveMap);
         model.addAttribute("blogCount",blogCount);
         return "archives";

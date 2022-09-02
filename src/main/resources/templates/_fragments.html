@@ -41,9 +41,9 @@
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <a target="_blank" href="#" th:href="@{/admin/index}" class="m-item item m-mobile-hide" th:classappend="${n==6} ? 'active'"><i class="mini user outline icon"></i>&nbsp;&nbsp;登录后台&nbsp;&nbsp;</a>
-                        <a href="#" class="item teal"><i class="mini linkify icon"></i>友链管理</a>
-                        <a href="#" class="item teal"><i class="mini location arrow icon"></i>网站导航</a>
-                        <a href="#" class="item teal"><i class="mini bell icon"></i>公告</a>
+                        <a href="#" th:href="@{/link}" class="m-item item m-mobile-hide" th:classappend="${n==8} ? 'active'"><i class="mini linkify icon"></i>友链管理</a>
+                        <a href="#" th:href="@{/webNav}" class="m-item item m-mobile-hide" th:classappend="${n==9} ? 'active'"><i class="mini location arrow icon"></i>网站导航</a>
+                        <a href="#" th:href="@{/notice}" class="m-item item m-mobile-hide" th:classappend="${n==10} ? 'active'"><i class="mini bell icon"></i>公告</a>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
             </div>
         </div>
         <div class="ui inverted section divider"></div>
-        <a href="https://beian.miit.gov.cn/" class="m-text-thin m-text-spaced m-opacity-tiny" style="color: aliceblue" target="_blank">备案号:川ICP备000000000019号</a>
+        <a href="https://beian.miit.gov.cn/" class="m-text-thin m-text-spaced m-opacity-tiny" style="color: aliceblue" target="_blank">备案号:滇ICP备2022005357号</a>
         <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2022 Designed by liujian</p>
     </div>
 </footer>
