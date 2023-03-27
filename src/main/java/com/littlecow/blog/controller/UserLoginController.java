@@ -91,7 +91,7 @@ public class UserLoginController {
     }
 
     @RequestMapping("/freshEmailCode")
-    public void freshEmailCode(){
+    public void freshEmailCode(@RequestParam String email){
 
     }
 

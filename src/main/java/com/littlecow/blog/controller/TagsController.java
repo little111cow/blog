@@ -51,7 +51,7 @@ public class TagsController {
     }
 
     @PostMapping("/tags")
-    public String postTag(Tag tag, RedirectAttributes attributes){
+    public String postTag(Tag tag, RedirectAttributes attributes) {
         Tag tag1 = tagsService.getTagByName(tag.getName());
         if(tag1 != null){
             attributes.addFlashAttribute(Contants.MESSAGE,"不能添加重复的标签！");
@@ -68,7 +68,7 @@ public class TagsController {
     }
 
     @RequestMapping("/tags/{id}/delete")
-    public String deleteTagById(@PathVariable Long id,RedirectAttributes attributes){
+    public String deleteTagById(@PathVariable Long id, RedirectAttributes attributes){
         List<Blog> blogs = blogsService.getBlogList();
         int blogNums = controllerUtils.getBlogsByTagId(id, blogs).size();
         if (blogNums > 0) {

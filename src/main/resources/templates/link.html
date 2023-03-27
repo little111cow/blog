@@ -3,13 +3,13 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>资源下载</title>
+    <title>友链</title>
     <link rel="stylesheet" type="text/css" href="../static/css/semantic.min.css"/>
     <link rel="stylesheet" type="text/css" href="../static/css/me.css"/>
 </head>
 <body>
 <!--  导航 -->
-<nav th:replace="_fragments :: menu(5)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(8)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">littlecow</h2>
@@ -19,15 +19,12 @@
             <a href="#" class="m-item item m-mobile-hide"><i class="mini clone icon"></i>&nbsp;&nbsp;归档&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini info icon"></i>&nbsp;&nbsp;关于我&nbsp;&nbsp;</a>
             <a target="_blank" href="#" class="m-item item m-mobile-hide"><i class="mini user outline icon"></i>&nbsp;&nbsp;登录后台&nbsp;&nbsp;</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini download icon"></i>&nbsp;&nbsp;资源下载&nbsp;&nbsp;</a>
             <div class="m-item right item m-mobile-hide">
                 <div class="ui icon inverted transparent input">
-                    <input id ="searchBtn" type="text" placeholder="Search..."/>
+                    <input type="text" placeholder="Search..."/>
                     <i class="search link icon"></i>
                 </div>
-                <button id="clear-btn1" class="m-item right item m-mobile-hide ui compact button">clear</button>
             </div>
-            <h6 class="ui teal item" id="dateTime"></h6>
         </div>
     </div>
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
@@ -38,49 +35,77 @@
 <!-- content -->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
-        <table class="ui iceland celled table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>文件名称</th>
-                <th>文件类型</th>
-                <th>上传时间</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="file, iterStat : ${pageInfo.list}">
-                <td th:text="${iterStat.count}">1</td>
-                <td th:text="${file.fileName}">可以联系清单</td>
-                <td th:text="${file.fileSuffix}">txt</td>
-                <td class="ui center aligned" th:text="${#dates.format(file.uploadTime, 'yyyy-MM-dd HH:mm:ss')}">2019-09-20 00:45</td>
-                <td>
-                    <a href="#" th:href="@{/files/{id}/download(id=${file.id})}" class="ui mini teal basic button">下载</a>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="6">
-                    <div class="ui mini pagination menu">
-                        <div class="item"><a th:href="@{/files}">首页</a></div>
-                        <div class="item"><a th:href="@{/files(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
-                        <div class="item"><a th:href="@{/files(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
-                        <div class="item"><a th:href="@{/files(pagenum=${pageInfo.pages})}">尾页</a></div>
+        <!-- 用来提醒用户操作是否成功 -->
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="ui close icon"></i>
+            <div class="header">提示:</div>
+            <p th:text="${message}"></p>
+        </div>
+        <!-- header -->
+        <div class="ui top attached padded segment">
+            <div class="ui middle aligned two column grid">
+                <div class="column">
+                    <div class="ui teal header">友链</div>
+                </div>
+                <div class="right aligned column">
+                    共 <h3 class="ui orange header m-inline-block m-text-thin" th:text="${linkCount}">124</h3> 条友情链接
+                </div>
+            </div>
+        </div>
+        <!-- content -->
+        <div class="ui attached segment">
+            <div class="ui vertical padded segment m-padded-tb-mini" th:each="link : ${pageInfo.list}">
+                <div class="ui middle aligned mobile reversed stackable grid">
+                    <div class="eleven wide column">
+
+                        <h3 class="ui header">
+                            <span>
+                                <a href="#" target="_blank" th:href="@{${link.url}}" th:text="${link.description}">
+                                   链接描述
+                                </a>
+                                 <a href="#" target="_blank" th:href="@{${link.url}}">
+                                    <i class="angle double right icon"></i>
+                                 </a>
+                            </span>
+                        </h3>
+                        <div class="ui stackable grid">
+                            <div class="eleven wide column">
+                                <div class="ui mini horizontal link list">
+                                    <div class="item">
+                                        <i class="calendar icon"></i>
+                                       发布时间: <span th:text="${#dates.format(link.createTime, 'yyyy-MM-dd HH:MM')}">2022-04-17</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+
+                    <div class="five wide column">
+                        <a href="#" target="_blank" th:href="@{${link.url}}">
+                            <img src="https://cdn.mom1.cn/?mom=302" th:src="@{${link.coverPictureUrl}}" alt="" style="height: 120px ;width: 150px"
+                                 class="ui rounded image">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached segment">
+            <div class="ui mini pagination menu">
+                <!--此处还存在问题，条件查询时不能翻页，无法共用请求-->
+                <div class="item"><a th:href="@{/link}">首页</a></div>
+                <div class="item"><a th:href="@{/link(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
+                <div class="item"><a th:href="@{/link(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
+                <div class="item"><a th:href="@{/link(pagenum=${pageInfo.pages})}">尾页</a></div>
+            </div>
+            <a href="#" th:href="@{/link/input}" class="ui mini right floated teal basic button">申请友链</a>
+        </div>
         <div class="ui mini segment m-inline-block">
             <p class="text m-font-color">当前第<span class="m-teal" th:text="${pageInfo.pageNum}"></span>页，总<span class="m-teal" th:text="${pageInfo.pages}"></span>页，共<span class="m-teal" th:text="${pageInfo.total}"></span>条记录</p>
         </div>
     </div>
 </div>
-
 <br>
 <br>
-
 <div class="m-padded m-fixed m-right-bottom">
     <div class="ui vertical icon buttons">
         <button type="button" class="ui wechat icon red button"><i class="wechat icon"></i></button>
@@ -91,7 +116,6 @@
 <div id="qrcode" class="ui wechat-qr flowing popup transition hidden m-padded-mini" style="width: 120px !important;">
     <!-- <img src="../static/images/wechat.jpg" alt="" style="width: 110px !important;"> -->
 </div>
-
 <!-- 底部footer -->
 <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -99,8 +123,7 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" class="ui rounded image"
-                             style="width: 110px; height: 110px;">
+                        <img src="../static/images/wechat.jpg" class="ui rounded image" style="width: 110px; height: 110px;">
                     </div>
                 </div>
             </div>
@@ -131,24 +154,28 @@
     </div>
 </footer>
 
-<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
 <script src="../static/js/jquery-3.3.1.min.js"></script>
 <script src="../static/js/semantic.min.js"></script>
 <script src="../static/lib/prism/prism.js"></script>
+<!--//代码高亮js引入-->
 <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
 <script src="../static/lib/qrcode/qrcode.min.js"></script>
-
+<!--//生成二维码js引入-->
 <script src="../static/lib/tocbot/tocbot.min.js"></script>
-
-
+<!--//生成目录js引入-->
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
+<!--//监测滚动轨迹-->
 <!--/*/</th:block>/*/-->
+
 <script>
     $('.wechat').popup({
         popup : $('.wechat-qr'),
         position: 'left center'
     });
 
-    var serurl = /*[[#{blog.serurl}]]*/"http://www.littlecow.site:9090/files";  //访问的项目根地址
+    var serurl = /*[[#{blog.serurl}]]*/"http://www.littlecow.site:9090/link";  //访问的项目根地址
+
     var qrcode = new QRCode("qrcode", {
         text: serurl,
         width: 110,
@@ -161,59 +188,18 @@
     $('#toTop-button').click(function () {
         $(window).scrollTo(0,500);
     });
+    //消息提示关闭初始化
+    $(".message .close").click(function(){
+        $(this)
+            .closest(".message")
+            .transition("fade");
+    });
+
     $(function () {
         $(".menu.toggle").click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
         })
-
-        $(".ui.dropdown").dropdown({
-            on: 'hover'
-        });
-
-    //    消息提示关闭
-
-        $(".message .close")
-            .on('click', function(){
-                $(this)
-                    .closest('.message')
-                    .transition('fade');
-            })
-
     })
-
-</script>
-<!--显示时间日期-->
-<script type="text/javascript">
-    /**
-     *获取当前时间
-     *format=1精确到天
-     *format=2精确到分
-     */
-    function getCurrentDate() {
-        var now = new Date();
-        var year = now.getFullYear(); //得到年份
-        var month = now.getMonth();//得到月份
-        var date = now.getDate();//得到日期
-        var day = now.getDay();//得到周几
-        var hour = now.getHours();//得到小时
-        var minu = now.getMinutes();//得到分钟
-        var sec = now.getSeconds();//得到秒
-        month = month + 1;
-        if (month < 10) month = "0" + month;
-        if (date < 10) date = "0" + date;
-        if (hour < 10) hour = "0" + hour;
-        if (minu < 10) minu = "0" + minu;
-        if (sec < 10) sec = "0" + sec;
-        var time = "";
-        //精确到分
-        time = year + "年" + month + "月" + date+ "日  " + hour + ":" + minu + ":" + sec;
-        return time;
-    }
-</script>
-<script type="text/javascript">
-    setInterval(function() {
-        $('#dateTime').text(getCurrentDate());
-    }, 1000);
 </script>
 </body>
 </html>

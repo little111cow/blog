@@ -78,7 +78,7 @@
                         <i class="qq icon"></i>
                     </a>
                 </div>
-                <div class="ui wechat-qr flowing popup transition hidden">
+                <div class="ui wechat-q flowing popup transition hidden">
                     <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" alt="" class="ui rounded image" style="width: 120px;">
                 </div>
             </div>
@@ -89,6 +89,16 @@
 <br>
 <br>
 
+<div class="m-padded m-fixed m-right-bottom">
+    <div class="ui vertical icon buttons">
+        <button type="button" class="ui wechat1 icon red button"><i class="wechat icon"></i></button>
+        <a href="#" class="ui  button"><i class="chevron up icon"></i></a>
+    </div>
+</div>
+
+<div id="qrcode" class="ui wechat-qr flowing popup transition hidden m-padded-mini" style="width: 120px !important;">
+    <!-- <img src="../static/images/wechat.jpg" alt="" style="width: 110px !important;"> -->
+</div>
 <!-- 底部footer -->
 <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -133,6 +143,7 @@
 <script src="../static/lib/prism/prism.js"></script>
 //代码高亮js引入
 <script src="../static/lib/qrcode/qrcode.min.js"></script>
+<script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
 //生成二维码js引入
 <script src="../static/lib/tocbot/tocbot.min.js"></script>
 //生成目录js引入
@@ -141,13 +152,32 @@
 <!--/*/</th:block>/*/-->
 
 <script>
+    $('.wechat1').popup({
+        popup : $('.wechat-qr'),
+        position: 'left center'
+    });
+
+    var serurl = /*[[#{blog.serurl}]]*/"http://www.littlecow.site:9090/about";  //访问的项目根地址
+    var qrcode = new QRCode("qrcode", {
+        text: serurl,
+        width: 110,
+        height: 110,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+    $('#toTop-button').click(function () {
+        $(window).scrollTo(0,500);
+    });
+
     $(function () {
         $(".menu.toggle").click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
         })
 
         $(".wechat").popup({
-            popup: $(".wechat-qr"),
+            popup: $(".wechat-q"),
             position: 'bottom center'
         });
 

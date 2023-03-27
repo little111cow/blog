@@ -3,13 +3,14 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>资源下载</title>
+    <title>申请友链</title>
     <link rel="stylesheet" type="text/css" href="../static/css/semantic.min.css"/>
+    <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/me.css"/>
 </head>
 <body>
 <!--  导航 -->
-<nav th:replace="_fragments :: menu(5)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(8)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">littlecow</h2>
@@ -19,15 +20,12 @@
             <a href="#" class="m-item item m-mobile-hide"><i class="mini clone icon"></i>&nbsp;&nbsp;归档&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini info icon"></i>&nbsp;&nbsp;关于我&nbsp;&nbsp;</a>
             <a target="_blank" href="#" class="m-item item m-mobile-hide"><i class="mini user outline icon"></i>&nbsp;&nbsp;登录后台&nbsp;&nbsp;</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini download icon"></i>&nbsp;&nbsp;资源下载&nbsp;&nbsp;</a>
             <div class="m-item right item m-mobile-hide">
                 <div class="ui icon inverted transparent input">
-                    <input id ="searchBtn" type="text" placeholder="Search..."/>
+                    <input type="text" placeholder="Search..."/>
                     <i class="search link icon"></i>
                 </div>
-                <button id="clear-btn1" class="m-item right item m-mobile-hide ui compact button">clear</button>
             </div>
-            <h6 class="ui teal item" id="dateTime"></h6>
         </div>
     </div>
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
@@ -38,49 +36,70 @@
 <!-- content -->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
-        <table class="ui iceland celled table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>文件名称</th>
-                <th>文件类型</th>
-                <th>上传时间</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="file, iterStat : ${pageInfo.list}">
-                <td th:text="${iterStat.count}">1</td>
-                <td th:text="${file.fileName}">可以联系清单</td>
-                <td th:text="${file.fileSuffix}">txt</td>
-                <td class="ui center aligned" th:text="${#dates.format(file.uploadTime, 'yyyy-MM-dd HH:mm:ss')}">2019-09-20 00:45</td>
-                <td>
-                    <a href="#" th:href="@{/files/{id}/download(id=${file.id})}" class="ui mini teal basic button">下载</a>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="6">
-                    <div class="ui mini pagination menu">
-                        <div class="item"><a th:href="@{/files}">首页</a></div>
-                        <div class="item"><a th:href="@{/files(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
-                        <div class="item"><a th:href="@{/files(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
-                        <div class="item"><a th:href="@{/files(pagenum=${pageInfo.pages})}">尾页</a></div>
-                    </div>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
-        <div class="ui mini segment m-inline-block">
-            <p class="text m-font-color">当前第<span class="m-teal" th:text="${pageInfo.pageNum}"></span>页，总<span class="m-teal" th:text="${pageInfo.pages}"></span>页，共<span class="m-teal" th:text="${pageInfo.total}"></span>条记录</p>
+        <!-- 用来提醒用户操作是否成功 -->
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="ui close icon"></i>
+            <div class="header">提示:</div>
+            <p th:text="${message}"></p>
         </div>
+        <form action="#" method="post" th:object="${link}" th:action="*{id}==null ? @{/link} : @{/admin/link/{id}(id=*{id})}" class="ui form">
+            <input type="hidden" name="id" th:value="*{id}">
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">昵称</label>
+                    <input type="text" name="nickName" placeholder="昵称" th:value="*{nickName}">
+                </div>
+            </div>
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">邮箱</label>
+                    <input type="email" name="email" placeholder="邮箱" th:value="*{email}">
+                </div>
+            </div>
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">链接地址</label>
+                    <input type="url" name="url" placeholder="链接地址..." th:value="*{url}">
+                </div>
+            </div>
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">图标地址</label>
+                    <input type="url" name="coverPictureUrl" placeholder="图标地址..." th:value="*{coverPictureUrl}">
+                </div>
+            </div>
+            <div class="required field">
+                <label class="ui teal basic label">链接描述</label>
+                <textarea name="description" th:text="*{description}" placeholder="链接描述..." maxlength="500"></textarea>
+            </div>
+            <div class="ui error message"></div>
+
+        <!--/*/
+            <div class="ui negative message" th:if="${#fields.hasErrors('nickName')}">
+                <i class="close icon"></i>
+                <div class="header">验证失败</div>
+                <p th:errors="*{0}">提交信息不符合规则</p>
+            </div>
+            <div class="ui negative message" th:if="${#fields.hasErrors('description')}">
+                <i class="close icon"></i>
+                <div class="header">验证失败</div>
+                <p th:errors="*{0}">提交信息不符合规则</p>
+            </div>
+            /*/-->
+
+
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui teal submit button">提交</button>
+            </div>
+
+        </form>
     </div>
 </div>
 
 <br>
 <br>
-
+<br><br><br><br>
 <div class="m-padded m-fixed m-right-bottom">
     <div class="ui vertical icon buttons">
         <button type="button" class="ui wechat icon red button"><i class="wechat icon"></i></button>
@@ -91,7 +110,6 @@
 <div id="qrcode" class="ui wechat-qr flowing popup transition hidden m-padded-mini" style="width: 120px !important;">
     <!-- <img src="../static/images/wechat.jpg" alt="" style="width: 110px !important;"> -->
 </div>
-
 <!-- 底部footer -->
 <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -99,7 +117,7 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" class="ui rounded image"
+                        <img src="../static/images/wechat.jpg" class="ui rounded image"
                              style="width: 110px; height: 110px;">
                     </div>
                 </div>
@@ -131,16 +149,13 @@
     </div>
 </footer>
 
-<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
 <script src="../static/js/jquery-3.3.1.min.js"></script>
 <script src="../static/js/semantic.min.js"></script>
 <script src="../static/lib/prism/prism.js"></script>
 <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
 <script src="../static/lib/qrcode/qrcode.min.js"></script>
-
 <script src="../static/lib/tocbot/tocbot.min.js"></script>
-
-
 <!--/*/</th:block>/*/-->
 <script>
     $('.wechat').popup({
@@ -148,7 +163,8 @@
         position: 'left center'
     });
 
-    var serurl = /*[[#{blog.serurl}]]*/"http://www.littlecow.site:9090/files";  //访问的项目根地址
+    var serurl = /*[[#{blog.serurl}]]*/"http://www.littlecow.site:9090/link/input";  //访问的项目根地址
+
     var qrcode = new QRCode("qrcode", {
         text: serurl,
         width: 110,
@@ -161,59 +177,66 @@
     $('#toTop-button').click(function () {
         $(window).scrollTo(0,500);
     });
+    //消息提示关闭初始化
+    $(".message .close").click(function(){
+        $(this)
+            .closest(".message")
+            .transition("fade");
+    });
+
     $(function () {
+
+
         $(".menu.toggle").click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
-        })
+        });
 
         $(".ui.dropdown").dropdown({
             on: 'hover'
         });
 
-    //    消息提示关闭
+        //表单验证
 
-        $(".message .close")
-            .on('click', function(){
-                $(this)
-                    .closest('.message')
-                    .transition('fade');
-            })
-
+        $(".ui.form").form({
+            fields: {
+                nickName: {
+                    identifier: 'nickName',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请输入你的昵称'
+                    }]
+                },
+                description: {
+                    identifier: 'description',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请输入链接描述'
+                    }]
+                },
+                url: {
+                    identifier: 'url',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请输入链接地址'
+                    }]
+                },
+                coverPictureUrl: {
+                    identifier: 'coverPictureUrl',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请输入图标地址'
+                    }]
+                },
+                email: {
+                    identifier: 'email',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请输入邮箱'
+                    }]
+                }
+            }
+        });
     })
-
-</script>
-<!--显示时间日期-->
-<script type="text/javascript">
-    /**
-     *获取当前时间
-     *format=1精确到天
-     *format=2精确到分
-     */
-    function getCurrentDate() {
-        var now = new Date();
-        var year = now.getFullYear(); //得到年份
-        var month = now.getMonth();//得到月份
-        var date = now.getDate();//得到日期
-        var day = now.getDay();//得到周几
-        var hour = now.getHours();//得到小时
-        var minu = now.getMinutes();//得到分钟
-        var sec = now.getSeconds();//得到秒
-        month = month + 1;
-        if (month < 10) month = "0" + month;
-        if (date < 10) date = "0" + date;
-        if (hour < 10) hour = "0" + hour;
-        if (minu < 10) minu = "0" + minu;
-        if (sec < 10) sec = "0" + sec;
-        var time = "";
-        //精确到分
-        time = year + "年" + month + "月" + date+ "日  " + hour + ":" + minu + ":" + sec;
-        return time;
-    }
-</script>
-<script type="text/javascript">
-    setInterval(function() {
-        $('#dateTime').text(getCurrentDate());
-    }, 1000);
 </script>
 </body>
 </html>

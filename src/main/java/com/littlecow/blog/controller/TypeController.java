@@ -50,7 +50,7 @@ public class TypeController {
     @PostMapping("/types")
     public String post(Type type, RedirectAttributes attributes){
         Type t = typesService.getTypeByName(type.getName());
-        if(t != null){
+        if(t != null) {
             attributes.addFlashAttribute(Contants.MESSAGE,"不能添加重复的类型！");
             return "redirect:/admin/types/input";
         }
@@ -65,7 +65,7 @@ public class TypeController {
     }
 
     @RequestMapping("/types/{id}/delete")
-    public String deleteTypeById(@PathVariable Long id,RedirectAttributes attributes){
+    public String deleteTypeById(@PathVariable Long id,RedirectAttributes attributes) {
         List<Blog> blogs = blogsService.getBlogList();
         for (Blog blog : blogs) {
             if (blog.getTypeId().equals(id)) {

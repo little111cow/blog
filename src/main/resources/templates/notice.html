@@ -3,7 +3,7 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>系统通知</title>
+    <title>公告</title>
     <link rel="stylesheet" type="text/css" href="../static/css/semantic.min.css"/>
     <link rel="stylesheet" type="text/css" href="../static/css/me.css"/>
 </head>
@@ -12,7 +12,7 @@
 <nav th:replace="_fragments :: menu(10)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
-            <h2 class="ui teal header item">weiss</h2>
+            <h2 class="ui teal header item">littlecow</h2>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>&nbsp;&nbsp;首页&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>&nbsp;&nbsp;分类&nbsp;&nbsp;</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>&nbsp;&nbsp;标签&nbsp;&nbsp;</a>
@@ -85,7 +85,16 @@
 </div>
 <br>
 <br>
+<div class="m-padded m-fixed m-right-bottom">
+    <div class="ui vertical icon buttons">
+        <button type="button" class="ui wechat icon red button"><i class="wechat icon"></i></button>
+        <a href="#" class="ui  button"><i class="chevron up icon"></i></a>
+    </div>
+</div>
 
+<div id="qrcode" class="ui wechat-qr flowing popup transition hidden m-padded-mini" style="width: 120px !important;">
+    <!-- <img src="../static/images/wechat.jpg" alt="" style="width: 110px !important;"> -->
+</div>
 <!-- 底部footer -->
 <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -129,6 +138,7 @@
 <script src="../static/js/semantic.min.js"></script>
 <script src="../static/lib/prism/prism.js"></script>
 <!--//代码高亮js引入-->
+<script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
 <script src="../static/lib/qrcode/qrcode.min.js"></script>
 <!--//生成二维码js引入-->
 <script src="../static/lib/tocbot/tocbot.min.js"></script>
@@ -138,6 +148,25 @@
 <!--/*/</th:block>/*/-->
 
 <script>
+    $('.wechat').popup({
+        popup : $('.wechat-qr'),
+        position: 'left center'
+    });
+
+    var serurl = /*[[#{blog.serurl}]]*/"http://www.littlecow.site:9090/notice";  //访问的项目根地址
+
+    var qrcode = new QRCode("qrcode", {
+        text: serurl,
+        width: 110,
+        height: 110,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+    $('#toTop-button').click(function () {
+        $(window).scrollTo(0,500);
+    });
     $(function () {
         $(".menu.toggle").click(function () {
             $('.m-item').toggleClass('m-mobile-hide');

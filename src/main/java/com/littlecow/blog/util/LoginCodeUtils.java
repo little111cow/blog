@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class LoginCodeUtils {
-    public static String getRandomCode(int length){
-        //获得四位随机验证码串恒为四位
+    public static String getRandomCode(int length) {
+        //获得length长度的随机验证码
         String codeBase = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";//随机字符集
         Random random = new Random();
         StringBuffer sb= new StringBuffer();

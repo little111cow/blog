@@ -3,13 +3,13 @@
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件上传和下载</title>
+    <title>友链管理</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css"/>
     <link rel="stylesheet" type="text/css" href="../../static/css/me.css"/>
 </head>
 <body>
 <!--  导航 -->
-<nav th:replace="admin/_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="admin/_fragments :: menu(6)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">littlecow</h2>
@@ -38,7 +38,15 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-
+<!-- 二级导航 -->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/link/input}" class="item">发布</a>
+            <a href="#" th:href="@{/admin/link}" class="active teal item">列表</a>
+        </div>
+    </div>
+</div>
 <!-- content -->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
@@ -53,54 +61,49 @@
             <thead>
             <tr>
                 <th></th>
-                <th>文件名称</th>
-                <th>文件类型</th>
-                <th>上传时间</th>
+                <th>申请人</th>
+                <th>邮箱地址</th>
+                <th>链接地址</th>
+                <th>链接描述</th>
+                <th>申请时间</th>
                 <th>发布状态</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="file, iterStat : ${pageInfo.list}">
+            <tr th:each="link, iterStat : ${pageInfo.list}">
                 <td th:text="${iterStat.count}">1</td>
-                <td th:text="${file.fileName}">可以联系清单</td>
-                <td th:text="${file.fileSuffix}">txt</td>
-                <td class="ui center aligned" th:text="${#dates.format(file.uploadTime, 'yyyy-MM-dd HH:mm:ss')}">2019-09-20 00:45</td>
-                <td th:text="${file.published} ? 发布 : 未发布">发布</td>
+                <td th:text="${link.nickName}">小明</td>
+                <td th:text="${link.email}">whu_jianliu@163.com</td>
                 <td>
-                    <a href="#" th:href="@{/files/{id}/download(id=${file.id})}" class="ui mini teal basic button">下载</a>
-                    <a href="#" th:href="@{/admin/files/{id}/delete(id=${file.id})}" class="ui mini red basic button">删除</a>
-                    <a href="#" th:href="@{/admin/files/{id}/publish/{published}(id=${file.id},published = ! ${file.published})}" class="ui mini green basic button" th:text="!${file.published} ? 发布 : 取消发布">发布</a>
+                    <a href="#" th:href="@{${link.url}}" th:text="${link.url}" target="_blank">http://www.baidu.com</a>
+                </td>
+                <td th:text="${link.description}">txt</td>
+                <td class="ui center aligned" th:text="${#dates.format(link.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-09-20 00:45</td>
+                <td th:text="${link.published} ? 发布 : 未发布">发布</td>
+                <td>
+                    <a href="#" th:href="@{/admin/link/{id}(id=${link.id})}" class="ui mini teal basic button">编辑</a>
+                    <a href="#" th:href="@{/admin/link/{id}/delete(id=${link.id})}" class="ui mini red basic button">删除</a>
+                    <a href="#" th:href="@{/admin/link/{id}/publish(id=${link.id})}" class="ui mini green basic button" th:text="!${link.published} ? 发布 : 取消发布">发布</a>
                 </td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="6">
+                <th colspan="8">
                     <div class="ui mini pagination menu">
-                        <div class="item"><a th:href="@{/admin/files}">首页</a></div>
-                        <div class="item"><a th:href="@{/admin/files(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
-                        <div class="item"><a th:href="@{/admin/files(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
-                        <div class="item"><a th:href="@{/admin/files(pagenum=${pageInfo.pages})}">尾页</a></div>
+                        <div class="item"><a th:href="@{/admin/link}">首页</a></div>
+                        <div class="item"><a th:href="@{/admin/link(pagenum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></div>
+                        <div class="item"><a th:href="@{/admin/link(pagenum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></div>
+                        <div class="item"><a th:href="@{/admin/link(pagenum=${pageInfo.pages})}">尾页</a></div>
                     </div>
+                    <a href="#" th:href="@{/link/input}" class="ui mini right floated teal basic button">新增</a>
                 </th>
             </tr>
             </tfoot>
         </table>
         <div class="ui mini segment m-inline-block">
             <p class="text m-font-color">当前第<span class="m-teal" th:text="${pageInfo.pageNum}"></span>页，总<span class="m-teal" th:text="${pageInfo.pages}"></span>页，共<span class="m-teal" th:text="${pageInfo.total}"></span>条记录</p>
-        </div>
-        <div class="ui mini segment">
-            <form th:action="@{/admin/files/upload}" method="POST" enctype="multipart/form-data">
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" id="isAvatar" name="isAvatar">
-                        <label for="isAvatar">头像</label>
-                    </div>
-                </div>
-                上传文件：<input class="ui mini item teal" type="file" name="file"/>
-                <input type="submit" class="ui right floated mini green button" placeholder="上传" value="上传"/>
-            </form>
         </div>
     </div>
 </div>

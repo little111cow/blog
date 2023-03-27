@@ -11,6 +11,7 @@ import com.littlecow.blog.exception.NotFoundException;
 import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.TagsService;
 import com.littlecow.blog.service.TypesService;
+import com.littlecow.blog.service.UserLoginService;
 import com.littlecow.blog.util.RandomAvatarUtils;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,9 @@ public class BlogsController {
 
     @Resource
     private TagsService tagsService;
+
+    @Resource
+    private UserLoginService userLoginService;
 
     @RequestMapping("/blogs")
     @SuppressWarnings("all")
@@ -149,13 +153,39 @@ public class BlogsController {
             attributes.addFlashAttribute(Contants.MESSAGE,"修改成功！");
             return "redirect:/admin/blogs";
         }
-        blog.setId(id);
         boolean isOk = blogsService.updateBlog(blog);
         if(!isOk){
             attributes.addFlashAttribute(Contants.MESSAGE,"修改失败!");
         }else {
             attributes.addFlashAttribute(Contants.MESSAGE, "修改成功！");
         }
+        return "redirect:/admin/blogs";
+    }
+
+    @RequestMapping("/blogs/{id}/publish")
+    public String publish(@PathVariable Long id, RedirectAttributes attributes){
+        Blog blog = blogsService.getBlogById(id);
+        User user = userLoginService.getUserById(blog.getUserId());
+        Type t = typesService.getTypeById(blog.getTypeId());
+        List<Tag> tags = tagsService.getTagByIds(blog.getTagIds());
+        blog.setTags(tags);
+        blog.setUser(user);
+        blog.setType(t);
+        blog.setPublished(!blog.getPublished());
+        boolean isOk = blogsService.updateBlog(blog);
+        if (!isOk) {
+            if (blog.getPublished()) {
+                attributes.addFlashAttribute(Contants.MESSAGE, "博客发布失败!");
+                return "redirect:/admin/blogs";
+            }
+            attributes.addFlashAttribute(Contants.MESSAGE, "取消发布博客失败!");
+            return "redirect:/admin/blogs";
+        }
+        if (!blog.getPublished()) {
+            attributes.addFlashAttribute(Contants.MESSAGE, "取消发布博客成功<^-^>");
+            return "redirect:/admin/blogs";
+        }
+        attributes.addFlashAttribute(Contants.MESSAGE, "博客发布成功<^-^>");
         return "redirect:/admin/blogs";
     }
 
