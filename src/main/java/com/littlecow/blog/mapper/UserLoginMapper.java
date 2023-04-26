@@ -14,12 +14,19 @@ public interface UserLoginMapper {
     @Select("select * from t_user where username=#{username} and password=#{password} ")
     User checkUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
+    //校验登录邮箱和验证码
+    @Select("select * from t_user where email=#{mail} and vcode=#{vcode} ")
+    User checkUserByMailAndVcode(@Param("mail") String mail, @Param("vcode") String vcode);
+
     @Update("update t_user set nickname = #{user.nickname},username=#{user.username},password=#{user.password}," +
             "email=#{user.email},update_time = #{user.updateTime} where id = #{user.id}")
     boolean updateUser(@Param("user") User user);
 
     @Select("select * from t_user where id = #{uid}")
     User getUserById(@Param("uid") Long id);
+
+    @Select("select * from t_user where email = #{email}")
+    User getUserByEmail(@Param("email") String email);
 
     @Select("select vcode from t_user where id = 1")
     String getVcode();

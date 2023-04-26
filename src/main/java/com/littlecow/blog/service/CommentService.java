@@ -14,4 +14,9 @@ public interface CommentService {
     Boolean saveComment(Comment comment);
 
     Comment getCommentUserByEmailAndNickname(String nickname,String email);
+
+    @Transactional
+    Boolean deleteCommentById(Long id);
+
+    List<Comment> getMessageList();
 }

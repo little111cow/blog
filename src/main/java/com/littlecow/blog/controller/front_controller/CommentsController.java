@@ -3,6 +3,7 @@ package com.littlecow.blog.controller.front_controller;
 import com.littlecow.blog.Contants;
 import com.littlecow.blog.entity.Comment;
 import com.littlecow.blog.entity.User;
+import com.littlecow.blog.service.BlogsService;
 import com.littlecow.blog.service.CommentService;
 import com.littlecow.blog.util.RandomAvatarUtils;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import javax.servlet.http.HttpSession;
 public class CommentsController {
     @Resource
     private CommentService commentService;
+
+    @Resource
+    private BlogsService blogsService;
 
 //    @Value("${comment.avatar}")
 //    private String avatar;
@@ -47,5 +51,12 @@ public class CommentsController {
         }
         commentService.saveComment(comment);
         return "redirect:/comments/" + blogId;
+    }
+
+    @GetMapping("/message")  //展示留言
+    public String comments(Model model){
+        model.addAttribute(Contants.BLOG, blogsService.getBlogById(3L));
+        model.addAttribute("comments", commentService.getCommentByBlogId(3L));
+        return "message-me";
     }
 }

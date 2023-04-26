@@ -21,6 +21,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
+    public Boolean deleteCommentById(Long id) {
+        commentMapper.modifyParentId(id);
+        return commentMapper.deleteCommentById(id);
+    }
+
+    @Override
+    public List<Comment> getMessageList() {
+        return commentMapper.getMessageList();
+    }
+
+    @Override
     public List<Comment> getCommentByBlogId(Long id) {
         List<Comment> commentList = commentMapper.getCommentByBlogId(id,-1L);  //获取当前博客没有父节点的所有评论
         for(Comment comment:commentList){

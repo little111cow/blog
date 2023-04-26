@@ -51,7 +51,27 @@ public class CommenControllerUtils {
         Map<String,Set<Blog>> archiveMap = new TreeMap<>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return o2.compareTo(o1);
+                String[] ss = o1.split("/");
+                String[] ss1 = o2.split("/");
+                int i1 = Integer.parseInt(ss[0]);
+                int i2 = Integer.parseInt(ss[1]);
+                int i3 = Integer.parseInt(ss1[0]);
+                int i4 = Integer.parseInt(ss1[1]);
+                if (i1 > i3) {
+                    return -1;
+                }
+                if (i1 < i3) {
+                    return 1;
+                }
+                if (i1 == i3) {
+                    if (i2 > i4) {
+                        return -1;
+                    }
+                    if (i2 < i4) {
+                        return 1;
+                    }
+                }
+                return 0;
             }
         });
         for(Blog blog:blogList){
@@ -62,7 +82,7 @@ public class CommenControllerUtils {
             Set<Blog> list = archiveMap.getOrDefault(key,new TreeSet<>(new Comparator<Blog>() {
                 @Override
                 public int compare(Blog o1, Blog o2) {
-                    return (o2.getCreateTime().getTime()+"").compareTo(o1.getCreateTime().getTime()+"");
+                    return o2.getCreateTime().getTime() >= o1.getCreateTime().getTime() ? 1 : -1;
                 }
             }));
             list.add(blog);

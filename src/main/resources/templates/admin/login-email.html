@@ -21,26 +21,32 @@
                             </div>
                         </div>
                     </h2>
-                    <form action="#" method="post" th:action="@{/admin/loginByEmail}" class="ui large form">
+                    <form id="form0" action="#" method="post" th:action="@{/admin/loginByEmail}" class="ui large form">
                         <div class="ui segment">
+                            <div class="field">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input form="form1" id="mail" type="email" name="email" placeholder="邮箱" th:value="*{email}">
+                                <button form="form1" class="ui fluid small teal submit button">获取验证码</button>
+                            </div>
+                        </div>
                             <div class="field">
                                 <div class="ui left icon input">
                                     <i class="mail icon"></i>
-                                    <input type="email" name="email" placeholder="邮箱">
+                                    <input form="form0" id="mail1" type="email" name="email" placeholder="邮箱" th:value="*{email}">
                                 </div>
                             </div>
                             <div class="field">
                                 <div class="ui left icon input">
-                                    <input name="mailcode" type="text" placeholder="请输入邮件验证码" style="width: 200px;">
-                                    <a href="#" th:src="@{/admin/freshEmailCode}">
-                                        <p>获取验证码</p>
-                                    </a>
+                                    <input form="form0" name="mailcode" type="text" placeholder="请输入邮件验证码" style="width: 200px;">
                                 </div>
                             </div>
-                            <button class="ui fluid large teal submit button">登   陆</button>
+                            <button form="form0" class="ui fluid large teal submit button">登   陆</button>
                         </div>
                         <div class="ui error mini message"></div>
                         <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+                    </form>
+                    <form id="form1" action="#" method="post" th:action="@{/admin/freshEmailCode}" class="ui large form">
                     </form>
                 </div>
             </div>
@@ -91,13 +97,13 @@
                     prompt: '请输入邮箱'
                 }]
             },
-            mailcode: {
-                identifier: 'mailcode',
-                rules: [{
-                    type: 'empty',
-                    prompt: '请输入验证码'
-                }]
-            }
+            // mailcode: {
+            //     identifier: 'mailcode',
+            //     rules: [{
+            //         type: 'empty',
+            //         prompt: '请输入验证码'
+            //     }]
+            // }
         }
     });
 

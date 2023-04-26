@@ -12,5 +12,9 @@ public interface UserLoginService {
 
     String getVcode();
 
+    User getUserByEmail(String email);
+
     Boolean updateVcode(String code);
+
+    User checkUserByMailAndVcode(String mail, String vcode);
 }

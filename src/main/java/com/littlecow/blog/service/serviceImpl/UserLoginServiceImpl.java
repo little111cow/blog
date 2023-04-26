@@ -22,8 +22,18 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userLoginMapper.getUserByEmail(email);
+    }
+
+    @Override
     public String getVcode() {
         return userLoginMapper.getVcode();
+    }
+
+    @Override
+    public User checkUserByMailAndVcode(String mail, String vcode) {
+        return userLoginMapper.checkUserByMailAndVcode(mail, vcode);
     }
 
     @Override

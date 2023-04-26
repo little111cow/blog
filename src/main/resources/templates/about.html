@@ -48,7 +48,7 @@
                 </div>
                 <div class="ui attached segment">
                     <p class="m-text">
-                        性格开朗，有良好的语言表达能力和沟通能力。具有一定的开拓和创新精神，接受新事物较快，涉猎面较宽，能够做到服从指挥，认真敬业，工作责任心强，工作效率高，执行公司指令坚决。在时间紧迫的情况下，加时加班、保质保量完成工作任务。
+                        本科毕业于武汉大学，研究生毕业于西南交通大学，现在就职于华为技术有限公司，从事6G通信技术研究，本人喜欢接触新事物，热爱编程和技术研究，具有良好的创新能力，业余时间开发和维护个人技术博客和公众号，希望能广交志同道合的朋友。
                     </p>
                     <p class="m-text">Hello World</p>
                 </div>
@@ -59,6 +59,7 @@
                     <div class="ui green left pointing basic label m-margin-tb-tiny">游戏</div>
                 </div>
                 <div class="ui attached segment">
+                    <div class="ui pink left pointing basic label m-margin-tb-tiny">通信技术</div>
                     <div class="ui pink left pointing basic label m-margin-tb-tiny">Java</div>
                     <div class="ui pink left pointing basic label m-margin-tb-tiny">MYSQL</div>
                     <div class="ui pink left pointing basic label m-margin-tb-tiny">Spring</div>
@@ -73,13 +74,19 @@
                     <a href="#" class="ui wechat circular icon button">
                         <i class="wechat icon"></i>
                     </a>
-                    <a href="#" class="ui qq circular icon button" data-content="2431148967"
-                       data-position="bottom left">
+                    <a href="#" class="ui qq circular icon button">
                         <i class="qq icon"></i>
                     </a>
+                    <!--<a href="#" class="ui qq circular icon button" data-content="2431148967"-->
+                       <!--data-position="bottom left">-->
+                        <!--<i class="qq icon"></i>-->
+                    <!--</a>-->
                 </div>
                 <div class="ui wechat-q flowing popup transition hidden">
-                    <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" alt="" class="ui rounded image" style="width: 120px;">
+                    <img src="../static/images/wechat1.png" th:src="@{/images/wechat1.png}" alt="" class="ui rounded image" style="width: 120px;">
+                </div>
+                <div class="ui qq-q flowing popup transition hidden">
+                    <img src="../static/images/qq.png" th:src="@{/images/qq.png}" alt="" class="ui rounded image" style="width: 120px;">
                 </div>
             </div>
         </div>
@@ -181,7 +188,10 @@
             position: 'bottom center'
         });
 
-        $(".qq").popup();
+        $(".qq").popup({
+            popup: $(".qq-q"),
+            position: 'bottom center'
+        });
     })
 </script>
 </body>

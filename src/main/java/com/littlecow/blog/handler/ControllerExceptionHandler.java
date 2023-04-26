@@ -19,6 +19,8 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handler(HttpServletRequest httpServletRequest, Exception e) throws Exception{
+        e.printStackTrace();
+        System.out.println(e.getMessage());
        StringBuffer url =  httpServletRequest.getRequestURL();
        logger.error("Url:",url.toString());
        if(AnnotationUtils.findAnnotation(e.getClass(),ResponseStatus.class) !=null){

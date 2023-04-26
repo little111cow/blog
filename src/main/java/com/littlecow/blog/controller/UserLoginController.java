@@ -4,6 +4,7 @@ import com.littlecow.blog.Contants;
 import com.littlecow.blog.entity.User;
 import com.littlecow.blog.service.UserLoginService;
 import com.littlecow.blog.util.LoginCodeUtils;
+import com.littlecow.blog.util.MailUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -87,12 +88,32 @@ public class UserLoginController {
     @RequestMapping("/loginByEmail")
     public String loginByEmail(@RequestParam String email, @RequestParam String mailcode,
                         HttpSession session, RedirectAttributes attributes){
-        return "admin/login-email";
+        User user = userLoginService.checkUserByMailAndVcode(email,mailcode);
+        if(user != null&&StringUtils.pathEquals(email,user.getEmail())){
+            if(!StringUtils.pathEquals(mailcode.toLowerCase(),userLoginService.getVcode().toLowerCase())){  //忽略大小写区别
+                attributes.addFlashAttribute(Contants.MESSAGE,"验证码错误!");
+                attributes.addAttribute("email", email);
+                return "redirect:/admin/email";
+            }
+            session.setAttribute(Contants.USER_SESSION, user);  //保存登录状态
+            return "admin/index";
+        }else{
+            attributes.addAttribute("email", email);
+            attributes.addFlashAttribute(Contants.MESSAGE,"用户邮箱错误！");
+            return "redirect:/admin/email";
+        }
     }
 
-    @RequestMapping("/freshEmailCode")
-    public void freshEmailCode(@RequestParam String email){
-
+    @PostMapping("/freshEmailCode")
+    public String freshEmailCode(@RequestParam String email, Model model){
+        String title = "littlecow博客系统登录验证码";
+        String mailcode = LoginCodeUtils.getRandomCode(6);
+        String content = "您好！你的登录验证码为【" + mailcode + "】，请勿泄露给他人。";
+        userLoginService.updateVcode(mailcode);  //保存验证码到数据库便于登录时验证
+        MailUtils.sendMail(email, title, content);
+        model.addAttribute("email", email);
+        model.addAttribute(Contants.MESSAGE,"验证码发送成功，请注意查收。");
+        return "admin/login-email";
     }
 
     //注销登录
